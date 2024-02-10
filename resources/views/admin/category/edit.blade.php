@@ -1,16 +1,17 @@
 @extends('admin.base')
 
-@section('title', 'Admin - Nouvel Article')
+@section('title', 'Admin - Editer article')
 
 
 @section('content')
 
     <div class="row mt-5 mb-4">
-        <h1>Créer un nouvel article</h1>
+        <h1>Editer la catégorie</h1>
     </div>
 
+
     <div class="row">
-        @include('admin.partials.form-post')
+        @include('admin.partials.form-category')
     </div>
 
 @endsection

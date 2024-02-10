@@ -57,7 +57,7 @@
                                         <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}" method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <button onclick="confirm('Voulez-vous vraiment supprimer l\'article ?') " type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Supprimer</button>
+                                            <button onclick="return confirm('Voulez-vous vraiment supprimer l\'article ?') " type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Supprimer</button>
                                         </form>
                                     </div>
                                 </th>

@@ -20,4 +20,5 @@ Route::get('/', function () {
 
 Route::prefix("admin")->name('admin.')->group(function () {
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']);
+    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
 });
