@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,13 +18,18 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        if (Category::count() === 0) {
+            Category::factory(5)->create();
+        }
+
         $title = fake()->name();
         $slug = Str::slug($title);
 
         return [
             "title" => $title,
             "slug" => $slug,
-            "content" => fake()->sentence(10)
+            "content" => fake()->sentence(10),
+            "category_id" => Category::inRandomOrder()->first()->id
         ];
     }
 }
