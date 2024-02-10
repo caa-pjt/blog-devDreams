@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostFilterRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index(): view
     {
-        $posts = Post::paginate(10);
+        $posts = Post::with('category')->orderBy("created_at", "desc")->paginate(10);
         return view('admin.index', ['posts' => $posts]);
     }
 
@@ -27,8 +27,8 @@ class PostController extends Controller
     public function create(): view
     {
         $post = new Post();
-
-        return view('admin.create', ['post' => $post]);
+        $categories = Category::all("id", "name");
+        return view('admin.post.create', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -56,7 +56,8 @@ class PostController extends Controller
      */
     public function edit(Post $post): view
     {
-        return view('admin.edit', ['post' => $post]);
+        $categories = Category::all("id", "name");
+        return view('admin.post.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -66,8 +67,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $post->update($data);
-
-        return redirect()->route("admin.post.index")->with("success", "Article mis à jour !");
+       return redirect()->route("admin.post.index")->with("success", "Article mis à jour !");
     }
 
     /**
@@ -75,10 +75,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post): RedirectResponse
     {
-        if ($post) {
-            $post->delete();
 
-            return redirect()->route("admin.post.index")
+        if ($post) {
+
+            $post->delete();
+            $page = request()->query->get("page");
+
+            return redirect()->route("admin.post.index", ['page' => $page])
                 ->with("success", "L'article a bien été supprimé !");
         } else {
             return Redirect::back()->withErrors(['error' => 'Impossible de supprimer l\'article :(']);

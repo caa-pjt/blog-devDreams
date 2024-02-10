@@ -9,7 +9,6 @@
         <h1>Administration des articles</h1>
     </div>
 
-
     <div class="row">
         @include('admin.partials.form-post')
     </div>

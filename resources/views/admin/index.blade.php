@@ -25,8 +25,8 @@
                         <tr>
                             <th>#</th>
                             <th>Titre</th>
-                            <th>Slug</th>
                             <th>Resumé</th>
+                            <th>Catégorie</th>
                             <th>Status</th>
                             <th class="text-end">Actions</th>
                         </tr>
@@ -36,8 +36,14 @@
                             <tr>
                                 <th>{{ $post->id }}</th>
                                 <th>{{ $post->title }}</th>
-                                <th>{{ $post->slug }}</th>
                                 <th>{{ $post->excerpt(50) }}</th>
+                                <th>
+                                    @if($post->category)
+                                        <span class="badge bg-secondary">{{ $post->category->name }}</span>
+                                    @else
+                                        null
+                                    @endif
+                                </th>
                                 <th>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
@@ -48,7 +54,7 @@
                                     <div class="d-flex justify-content-end">
                                         <a class="btn btn-outline-secondary btn-sm" style="margin-right: 5px"
                                            href="{{ route('admin.post.edit', ['post' => $post]) }}"><i class="bi bi-pencil"></i> Editer</a>
-                                        <form action="{{ route('admin.post.destroy', ['post' => $post]) }}" method="post">
+                                        <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}" method="post">
                                             @csrf
                                             @method("DELETE")
                                             <button onclick="confirm('Voulez-vous vraiment supprimer l\'article ?') " type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Supprimer</button>

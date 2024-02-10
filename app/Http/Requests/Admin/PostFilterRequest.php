@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostFilterRequest extends FormRequest
 {
@@ -23,9 +24,10 @@ class PostFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => ['required', 'min:3'],
-            "slug" => ['min:5'],
-            "content" => ['required', 'min:20']
+            "title" => ['required', 'min:3', Rule::unique('posts')->ignore($this->post)],
+            "slug" => ["required", "min:5", "regex:/^[0-9a-z\-]+$/", Rule::unique('posts')->ignore($this->post)],
+            "content" => ['required', 'min:20'],
+            "category_id" => ["nullable", "exists:categories,id"],
         ];
     }
 
