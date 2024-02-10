@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -29,4 +29,9 @@ class PostFilterRequest extends FormRequest
         ];
     }
 
+    public function prepareForValidation(){
+        $this->merge([
+            'slug' => $this->input('slug') ?: Str::slug($this->input('title'))
+        ]);
+    }
 }

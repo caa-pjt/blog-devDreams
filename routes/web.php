@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix("/admin")->name('admin.')->group(function () {
-    Route::resource('posts', PostsController::class)->except(['show']);
+Route::prefix("admin")->name('admin.')->group(function () {
+    Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']);
 });
