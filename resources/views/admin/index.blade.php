@@ -19,15 +19,15 @@
                         <a href="{{route('admin.post.create')}}" class="btn btn-primary ms-1">Nouveau</a>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped">
-                        <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>#</th>
                             <th>Titre</th>
                             <th>Resumé</th>
                             <th>Catégorie</th>
-                            <th>Status</th>
+                            <th>Online ?</th>
                             <th class="text-end">Actions</th>
                         </tr>
                         </thead>
@@ -47,7 +47,6 @@
                                 <th>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                        <label class="label" for="flexSwitchCheckDefault">Online?</label>
                                     </div>
                                 </th>
                                 <th>

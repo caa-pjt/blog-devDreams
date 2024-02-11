@@ -17,9 +17,9 @@
                         <a href="{{route('admin.category.create')}}" class="btn btn-primary ms-1">Nouvelle catégorie</a>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped">
-                        <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>#</th>
                             <th>Nom de la catégorie</th>
