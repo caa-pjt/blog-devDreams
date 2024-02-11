@@ -46,7 +46,7 @@
                                 </th>
                                 <th>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <input class="form-check-input" type="checkbox" role="switch" name="published" {{ $post->published == 1 ? 'checked' : ''  }} disabled>
                                     </div>
                                 </th>
                                 <th>

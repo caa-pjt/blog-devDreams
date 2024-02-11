@@ -43,13 +43,6 @@ class PostController extends Controller
             ->with("success", "Le post à bien été créé !");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

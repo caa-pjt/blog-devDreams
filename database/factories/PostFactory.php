@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -29,7 +30,8 @@ class PostFactory extends Factory
             "title" => $title,
             "slug" => $slug,
             "content" => fake()->sentence(10),
-            "category_id" => Category::inRandomOrder()->first()->id
+            "category_id" => Category::inRandomOrder()->first()->id,
+            "published" => Arr::random([true, false])
         ];
     }
 }

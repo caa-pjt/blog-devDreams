@@ -28,12 +28,14 @@ class PostFilterRequest extends FormRequest
             "slug" => ["required", "min:5", "regex:/^[0-9a-z\-]+$/", Rule::unique('posts')->ignore($this->post)],
             "content" => ['required', 'min:20'],
             "category_id" => ["nullable", "exists:categories,id"],
+            "published" => ["required", "boolean"]
         ];
     }
 
     public function prepareForValidation(){
         $this->merge([
-            'slug' => $this->input('slug') ?: Str::slug($this->input('title'))
+            'slug' => $this->input('slug') ?: Str::slug($this->input('title')),
+            "published" => ($this->input('published') == 'on' ) ? 1 : 0
         ]);
     }
 }
