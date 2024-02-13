@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('base')
 
 @section('title', 'Administration du blog')
 
@@ -39,24 +39,27 @@
                                 <th>{{ $post->excerpt(50) }}</th>
                                 <th>
                                     @if($post->category)
-                                        <span class="badge bg-secondary">{{ $post->category->name }}</span>
+                                        {{ $post->category->name }}
                                     @else
                                         null
                                     @endif
                                 </th>
                                 <th>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" name="published" {{ $post->published == 1 ? 'checked' : ''  }} disabled>
-                                    </div>
+                                    <span @class(['badge', $post->published == 1 ? 'text-bg-success' : 'text-bg-secondary'])>{{ $post->published == 1 ? 'Online' : 'Offline' }}</span>
                                 </th>
                                 <th>
                                     <div class="d-flex justify-content-end">
                                         <a class="btn btn-outline-secondary btn-sm" style="margin-right: 5px"
-                                           href="{{ route('admin.post.edit', ['post' => $post]) }}"><i class="bi bi-pencil"></i> Editer</a>
-                                        <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}" method="post">
+                                           href="{{ route('admin.post.edit', ['post' => $post]) }}"><i
+                                                    class="bi bi-pencil"></i> Editer</a>
+                                        <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}"
+                                              method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <button onclick="return confirm('Voulez-vous vraiment supprimer l\'article ?') " type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Supprimer</button>
+                                            <button onclick="return confirm('Voulez-vous vraiment supprimer l\'article ?') "
+                                                    type="submit" class="btn btn-outline-danger btn-sm"><i
+                                                        class="bi bi-trash"></i> Supprimer
+                                            </button>
                                         </form>
                                     </div>
                                 </th>

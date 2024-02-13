@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('base')
 
 @section('title', 'Admin - Nouvel Article')
 

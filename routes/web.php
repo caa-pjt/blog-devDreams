@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\PostsController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BlogController::class, 'index'] )->name('home');
 
-Route::prefix("admin")->name('admin.')->group(function () {
-    Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']);
-    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
+Route::get("login", [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('login', [AuthController::class, 'doLogin']);
+Route::delete('logout', [AuthController::class, 'logout'])->name('logout')->middleware("auth");
+
+Route::prefix("admin")->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('post', PostController::class)->except(['show']);
+    Route::resource('category', CategoryController::class)->except(['show']);
 });

@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('base')
 
 @section('title', 'Administration des catégories')
 
@@ -34,11 +34,16 @@
                                 <th>
                                     <div class="d-flex justify-content-end">
                                         <a class="btn btn-outline-secondary btn-sm" style="margin-right: 5px"
-                                           href="{{ route('admin.category.edit', ['category' => $category]) }}"><i class="bi bi-pencil"></i> Editer</a>
-                                        <form action="{{ route('admin.category.destroy', ['category' => $category, "page" => request()->query('page')]) }}" method="post">
+                                           href="{{ route('admin.category.edit', ['category' => $category]) }}"><i
+                                                    class="bi bi-pencil"></i> Editer</a>
+                                        <form action="{{ route('admin.category.destroy', ['category' => $category, "page" => request()->query('page')]) }}"
+                                              method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <button onclick="return confirm('Voulez-vous vraiment supprimer la catégorie ?') " type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Supprimer</button>
+                                            <button onclick="return confirm('Voulez-vous vraiment supprimer la catégorie ?') "
+                                                    type="submit" class="btn btn-outline-danger btn-sm"><i
+                                                        class="bi bi-trash"></i> Supprimer
+                                            </button>
                                         </form>
                                     </div>
                                 </th>

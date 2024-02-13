@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class PostFilterRequest extends FormRequest
+class AuthFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class PostFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => ['required', 'min:3'],
-            "slug" => ['min:5'],
-            "content" => ['required', 'min:20']
+            "email" => ["required", "email"],
+            "password" => ["required", "min:4"]
         ];
     }
-
 }

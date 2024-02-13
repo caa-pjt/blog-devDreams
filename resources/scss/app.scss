@@ -1,2 +1,13 @@
 @import "bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+// login form
+#login{
+  min-height: 70vh;
+}
+
+// navigation
+.dropdown-menu[data-bs-popper] {
+  left: auto;
+  right: 0;
+}
