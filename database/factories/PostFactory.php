@@ -31,6 +31,7 @@ class PostFactory extends Factory
             "slug" => $slug,
             "content" => fake()->sentence(10),
             "category_id" => Category::inRandomOrder()->first()->id,
+            "image" => null,
             "published" => Arr::random([true, false])
         ];
     }

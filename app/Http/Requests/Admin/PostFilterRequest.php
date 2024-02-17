@@ -28,7 +28,8 @@ class PostFilterRequest extends FormRequest
             "slug" => ["required", "min:5", "regex:/^[0-9a-z\-]+$/", Rule::unique('posts')->ignore($this->post)],
             "content" => ['required', 'min:20'],
             "category_id" => ["nullable", "exists:categories,id"],
-            "published" => ["required", "boolean"]
+            "published" => ["required", "boolean"],
+            'image' => ['image','mimes:jpeg,png,jpg','max:2048']
         ];
     }
 

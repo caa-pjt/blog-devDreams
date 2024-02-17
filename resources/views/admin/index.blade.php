@@ -25,7 +25,8 @@
                         <tr>
                             <th>#</th>
                             <th>Titre</th>
-                            <th>Resumé</th>
+                            <th>Slug</th>
+                            <th>Date de publication</th>
                             <th>Catégorie</th>
                             <th>Online ?</th>
                             <th class="text-end">Actions</th>
@@ -36,7 +37,8 @@
                             <tr>
                                 <th>{{ $post->id }}</th>
                                 <th>{{ $post->title }}</th>
-                                <th>{{ $post->excerpt(50) }}</th>
+                                <th>{{ $post->slug }}</th>
+                                <th>{{ $post->created_at->format('d/m/Y') }}</th>
                                 <th>
                                     @if($post->category)
                                         {{ $post->category->name }}
@@ -48,8 +50,8 @@
                                     <span @class(['badge', $post->published == 1 ? 'text-bg-success' : 'text-bg-secondary'])>{{ $post->published == 1 ? 'Online' : 'Offline' }}</span>
                                 </th>
                                 <th>
-                                    <div class="d-flex justify-content-end">
-                                        <a class="btn btn-outline-secondary btn-sm" style="margin-right: 5px"
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a class="btn btn-outline-secondary btn-sm"
                                            href="{{ route('admin.post.edit', ['post' => $post]) }}"><i
                                                     class="bi bi-pencil"></i> Editer</a>
                                         <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}"

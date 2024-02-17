@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title", "slug", "content", "category_id", "published"];
+    protected $fillable = ["title", "slug", "content", "category_id", "published", "image"];
 
     public function category(): BelongsTo
     {
@@ -28,5 +29,10 @@ class Post extends Model
     public function excerpt($length = 100): string
     {
         return Str::limit($this->content, $length);
+    }
+
+    public function imageUrl(): string
+    {
+        return Storage::disk('public')->url($this->image);
     }
 }
