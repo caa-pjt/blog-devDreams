@@ -28,7 +28,7 @@
                             <th>Slug</th>
                             <th>Date de publication</th>
                             <th>Catégorie</th>
-                            <th>Online ?</th>
+                            <th>Status</th>
                             <th class="text-end">Actions</th>
                         </tr>
                         </thead>
@@ -47,7 +47,8 @@
                                     @endif
                                 </th>
                                 <th>
-                                    <span @class(['badge', $post->published == 1 ? 'text-bg-success' : 'text-bg-secondary'])>{{ $post->published == 1 ? 'Online' : 'Offline' }}</span>
+                                    <span @class(['p-2 badge', $post->published == 1 ? 'text-bg-success' :
+                                    'text-bg-danger'])>{{ $post->published == 1 ? 'Actif' : 'Inactif' }}</span>
                                 </th>
                                 <th>
                                     <div class="d-flex justify-content-end gap-2">

@@ -10,29 +10,43 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ["title", "slug", "content", "category_id", "published", "image"];
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-
-    /**
-     * Retourne un extrait de l'article
-     *
-     * @param $length -> Longer de l'extrait
-     * @return string
-     */
-    public function excerpt($length = 100): string
-    {
-        return Str::limit($this->content, $length);
-    }
-
-    public function imageUrl(): string
-    {
-        return Storage::disk('public')->url($this->image);
-    }
+	use HasFactory;
+	
+	protected $fillable = ["title", "slug", "content", "category_id", "published", "image"];
+	
+	public function category(): BelongsTo
+	{
+		return $this->belongsTo(Category::class);
+	}
+	
+	
+	/**
+	 * Retourne un extrait de l'article
+	 *
+	 * @param $length -> Longer de l'extrait
+	 * @return string
+	 */
+	public function excerpt($length = 100): string
+	{
+		return Str::limit($this->content, $length);
+	}
+	
+	/**
+	 * Retourne l'URL de l'image
+	 * @return string
+	 */
+	public function imageUrl(): string
+	{
+		return Storage::disk('public')->url($this->image);
+	}
+	
+	/**
+	 * Retourne la liste des articles qui sont "published"
+	 * @param $query
+	 * @return mixed
+	 */
+	public function scopePublished($query)
+	{
+		return $query->where('published', true);
+	}
 }

@@ -1,13 +1,22 @@
 @import "bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-// login form
-#login{
-  min-height: 70vh;
+@import "mixin";
+@import "banner";
+@import "post";
+
+
+.bg-repeat-0 {
+  background-repeat: no-repeat;
 }
 
-// navigation
-.dropdown-menu[data-bs-popper] {
-  left: auto;
-  right: 0;
+.bg-size-cover {
+  background-size: cover;
+  background-position: center;
 }
+
+.position-relative {
+  position: relative;
+}
+
+

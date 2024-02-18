@@ -1,0 +1,80 @@
+// banner Home page
+.header-container-blog {
+  margin-top: -25px;
+  background-image: url('../../public/images/header-home.jpg');
+  position: relative;
+  background-position: right;
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 0px;
+  left: 0px;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  background-attachment: fixed;
+  padding: 50px 0;
+}
+
+.header-bg {
+
+  &:after {
+    background: #150909;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: .8;
+    content: "";
+  }
+
+  .header-content {
+    z-index: 1;
+  }
+
+  h1.heading {
+    font-weight: 500;
+    font-size: 4rem;
+  }
+
+}
+
+// Banner posts single page
+.banner {
+  background-color: rgba(46, 57, 191, 0.98);
+  top: -25px;
+  position: relative;
+  height: 50vh;
+  min-height: 450px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  background-position: center center;
+  overflow: hidden;
+  opacity: 0.9;
+
+  .banner-content {
+    position: relative;
+    color: #fff;
+    z-index: 1;
+    width: 100%;
+    text-align: left;
+    padding: 120px 0px;
+  }
+
+  .bnr-strp {
+    height: 298px;
+    width: 150%;
+    background: rgba(44, 54, 187, 0.6);
+    display: inline-block;
+    position: absolute;
+    transform: rotate(18deg);
+    top: 90px;
+    right: -40px;
+  }
+}

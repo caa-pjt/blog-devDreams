@@ -1,0 +1,32 @@
+.post-container {
+
+  margin-top: -8em;
+  position: relative;
+
+  .post-preview {
+
+    min-height: 40em;
+    box-shadow: 0 0 18px 0 rgba(0, 0, 0, .4);
+    border-radius: .1875rem;
+
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+.post-preview {
+  img {
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+.article-img {
+  min-height: 15rem;
+}

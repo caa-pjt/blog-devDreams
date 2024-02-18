@@ -12,27 +12,27 @@ use Illuminate\Support\Str;
  */
 class PostFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        if (Category::count() === 0) {
-            Category::factory(5)->create();
-        }
-
-        $title = fake()->name();
-        $slug = Str::slug($title);
-
-        return [
-            "title" => $title,
-            "slug" => $slug,
-            "content" => fake()->sentence(10),
-            "category_id" => Category::inRandomOrder()->first()->id,
-            "image" => null,
-            "published" => Arr::random([true, false])
-        ];
-    }
+	/**
+	 * Define the model's default state.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function definition(): array
+	{
+		if (Category::count() === 0) {
+			Category::factory(5)->create();
+		}
+		
+		$title = fake()->name();
+		$slug = Str::slug($title);
+		
+		return [
+			"title" => $title,
+			"slug" => $slug,
+			"content" => fake()->paragraphs(30, true),
+			"category_id" => Category::inRandomOrder()->first()->id,
+			"image" => null,
+			"published" => Arr::random([true, false])
+		];
+	}
 }

@@ -19,7 +19,7 @@ class AuthController extends Controller
         $user = $request->validated();
         if (Auth::attempt($user)){
             $request->session()->regenerate();
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('admin.post.index'));
         }
 
         return redirect()->route('login')->withErrors(

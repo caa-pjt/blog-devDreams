@@ -1,0 +1,10 @@
+// Déclaration des variables
+$vh: 1vh;
+$min-height-values: (76, 10);
+
+// Boucle pour générer les classes dynamiquement
+@each $value in $min-height-values {
+  .mh-#{$value} {
+    min-height: $value * $vh;
+  }
+}
