@@ -23,16 +23,17 @@ class PostFactory extends Factory
 			Category::factory(5)->create();
 		}
 		
-		$title = fake()->name();
+		$title = $this->faker->name();
 		$slug = Str::slug($title);
+		$imagePath = 'images/' . date('Y') . '/' . date('m') . '/' . $this->faker->image(storage_path('app/public'), 400, 300, null, false);
 		
 		return [
 			"title" => $title,
 			"slug" => $slug,
-			"content" => fake()->paragraphs(30, true),
+			"content" => $this->faker->paragraphs(30, true),
 			"category_id" => Category::inRandomOrder()->first()->id,
-			"image" => null,
-			"published" => Arr::random([true, false])
+			"image" => $imagePath,
+			"published" => Arr::random([true, false]),
 		];
 	}
 }

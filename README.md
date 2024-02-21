@@ -1,10 +1,13 @@
 # MAS-RAD FRM mini projet - Blog Dev Dreams
+
 ## Objectif
+
 - Ce projet a pour objectif de developer une interface permettant de créer des
-articles et de les associer à une catégorie.
+  articles et de les associer à une catégorie.
 - Seul l'utilisateur (admin) peut administrer le site.
 
 ## Installation
+
 ### Récupération du projet
 
 1. Cloner dépôt :
@@ -12,12 +15,14 @@ articles et de les associer à une catégorie.
 ```bash
 https://github.com/caa-pjt/blog-devDreams.git
 ```
+
 2. Installer laravel sail :
 
 ```bash
 cd blog-devDreams
 docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id -g)   composer install
 ```
+
 3. Mettre à la racine le fichier .env du projet (le renommer en .env au lieu de .env.txt) :
 
 4. Démarrer docker et créer les conteneurs :
@@ -41,4 +46,10 @@ docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id 
 
 ```bash
 ./vendor/bin/sail artisan db:seed
+```
+
+### Tester l'application
+
+```bash
+./vendor/bin/sail artisan test
 ```
