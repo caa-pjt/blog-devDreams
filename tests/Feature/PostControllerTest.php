@@ -134,28 +134,6 @@ class PostControllerTest extends TestCase
 		$response->assertViewHas('categories');
 	}
 	
-	
-	/**
-	 * Teste si la méthode update met à jour un article.
-	 *
-	 * @return void
-	 */
-	public function test_update_method_updates_post()
-	{
-		$this->signInUser();
-		
-		$post = Post::factory()->create();
-		$updatedData = [
-			'title' => 'Updated Title',
-			'content' => 'Updated Content from a test controller',
-		];
-		
-		$response = $this->put(route('admin.post.update', $post), $updatedData);
-		
-		$response->assertRedirect(route('admin.post.index'));
-		$this->assertDatabaseHas('posts', array_merge(['id' => $post->id], $updatedData));
-	}
-	
 	/**
 	 * Teste si la méthode update met à jour les données du post.
 	 *
