@@ -1,0 +1,66 @@
+.navbar {
+  background: $menu-bg;
+  border-radius: 0;
+  border: none;
+  display: block;
+  margin: 0;
+  margin-bottom: 100px;
+  padding: 0;
+  min-width: 230px;
+
+  .navbar-header {
+    float: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar-brand {
+    border-bottom: 1px solid $gray;
+    color: $menu-color !important;
+    font-size: 22px;
+    float: none;
+    line-height: 50px;
+    margin: 0;
+    text-align: left;
+    text-transform: capitalize;
+    display: block;
+    min-height: 69px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    span {
+      font-weight: 600;
+    }
+
+    img {
+      max-width: 70px;
+      transform: rotate(90deg);
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .menu-title {
+    border-bottom: 1px solid $gray;
+    color: #9496a1;
+    clear: both;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 50px;
+    padding: 15px 0 0 0;
+    text-transform: uppercase;
+    width: 100%;
+  }
+}
+
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:focus,
+.navbar .navbar-nav > .active > a:hover {
+  color: #d7d9e3 !important;
+}

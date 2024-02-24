@@ -27,7 +27,7 @@ class PostControllerTest extends TestCase
 		$response = $this->get(route('admin.post.index'));
 		
 		$response->assertStatus(200);
-		$response->assertViewIs('admin.index');
+		$response->assertViewIs('admin.post.index');
 		$response->assertViewHas('posts');
 	}
 	

@@ -1,6 +1,6 @@
-@extends('base')
+@extends('admin-base')
 
-@section('title', 'Admin - Editer article')
+@section('title', 'Admin - Editer l\'article')
 
 
 @section('content')

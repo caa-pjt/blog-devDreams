@@ -1,6 +1,6 @@
 @extends('admin-base')
 
-@section('title', 'Administration des catégories')
+@section('title', 'Administration de Articles')
 
 
 @section('content')
@@ -10,13 +10,12 @@
         <div class="row">
             <div class="col mb-4">
                 <div class="">
-                    <h1 class="fs-2">Gestion des Catégories</h1>
+                    <h1 class="fs-2">Gestion des articles</h1>
                 </div>
             </div>
 
             <!--Articles -->
             <div class="col-md-12">
-
                 <div class="card">
                     <div class="card-header">
                         <div class="align-items-center d-flex flex-wrap gap-3 justify-content-between">
@@ -32,8 +31,7 @@
                                             placeholder="Filtrer...."/>
                                 </div>
                             </div>
-                            <a href="{{ route('admin.category.create') }}" class="btn btn-primary">Nouvelle
-                                catégorie</a>
+                            <a href="{{route('admin.post.create')}}" class="btn btn-primary">Nouvel article</a>
                         </div>
                     </div>
                     <div class="card-body table-responsive">
@@ -41,26 +39,43 @@
                             <thead>
                             <tr class="">
                                 <th>#</th>
-                                <th>Nom de la catégorie</th>
+                                <th>Titre</th>
+                                <th>Slug</th>
+                                <th>Création</th>
+                                <th>Catégorie</th>
+                                <th>Status</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($posts as $post)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $post->id }}</td>
+                                    <td>{{ $post->title }}</td>
+                                    <td>{{ $post->slug }}</td>
+                                    <td>{{ $post->created_at->format('d/m/Y') }}</td>
+                                    <td>
+                                        @if($post->category)
+                                            {{ $post->category->name }}
+                                        @else
+                                            null
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span @class([$post->published == 1 ? 'text-success' : 'text-danger'])>{{ $post->published == 1 ? 'Actif' : 'Inactif' }}</span>
+                                    </td>
                                     <td>
                                         <div class="d-flex justify-content-end gap-2 align-items-baseline">
                                             <a class="btn btn-outline-secondary btn-sm"
-                                               href="{{ route('admin.category.edit', ['category' => $category]) }}"><i
-                                                        class="bi bi-pencil"></i> Editer</a>
-                                            <form action="{{ route('admin.category.destroy', ['category' => $category, "page" => request()->query('page')]) }}"
+                                               href="{{ route('admin.post.edit', ['post' => $post]) }}">
+                                                <i class="bi bi-pencil"></i> Editer
+                                            </a>
+                                            <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}"
                                                   method="post">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button onclick="return confirm('Voulez-vous vraiment supprimer la catégorie ?') "
+                                                <button onclick="return confirm('Voulez-vous vraiment supprimer l\'article ?') "
                                                         type="submit" class="btn btn-outline-danger btn-sm"><i
                                                             class="bi bi-trash"></i> Supprimer
                                                 </button>
@@ -71,7 +86,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $categories->links() }}
+                        {{ $posts->links() }}
                     </div>
                 </div>
             </div>
@@ -79,6 +94,6 @@
         </div>
         <!-- End row -->
     </div>
-    <!-- end Categories content -->
+    <!-- end Posts content -->
 
 @endsection

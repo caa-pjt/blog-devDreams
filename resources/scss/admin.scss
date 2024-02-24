@@ -1,0 +1,319 @@
+/**
+        Colors
+**/
+$white: white;
+$white-light: #878787;
+$container-bg: #f1f2f7;
+$menu-bg: #272c33;
+$menu-color: #f1f2f7;
+$gray: #4e4e52;
+$card-bg: #f0f3f5;
+$card-border: #c2cfd6;
+$card-header: #f8f8f8;
+
+// @import "bootstrap-5.3.3/bootstrap.scss";
+@import "bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+@import "admin/header";
+@import "admin/navbar";
+@import "admin/card";
+
+/* 
+    Global Styles 
+*/
+
+.transition {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: $container-bg;
+  display: table;
+  font-size: 16px;
+  width: 100%;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: $white-light;
+}
+
+p:focus {
+  border: none;
+  outline: 0;
+}
+
+a,
+button {
+  text-decoration: none;
+  outline: none !important;
+  color: $white-light;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding-left: 0;
+}
+
+.btn:focus,
+button:focus {
+  box-shadow: none !important;
+  outline: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+.btn,
+button,
+input,
+textarea {
+  box-shadow: none;
+  outline: 0 !important;
+}
+
+/* Main Styles */
+
+/* Left panel */
+aside.left-panel {
+  background: $menu-bg;
+  display: table-cell;
+  height: 100vh;
+  min-height: 100%;
+  padding: 0 25px;
+  vertical-align: top;
+  width: 280px;
+  transition: width 0.3s ease;
+
+  .asside-user {
+    display: none;
+  }
+}
+
+/* Right panel */
+
+.right-panel {
+  display: table-cell;
+  padding-left: 0 !important;
+  min-width: 50vh;
+  width: 100%;
+
+  -webkit-transition: all 0.35s ease;
+  -moz-transition: all 0.35s ease;
+  -ms-transition: all 0.35s ease;
+  -o-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+
+  .breadcrumbs {
+    background-color: #fff;
+    display: inline-block;
+    margin-top: 0;
+    padding: 0 5px;
+    width: 100%;
+  }
+
+  .page-header {
+    min-height: 50px;
+    margin: 0px;
+    padding: 0px 15px;
+    background: #ffffff;
+    border-bottom: 0px;
+
+    h1 {
+      font-size: 18px;
+      padding: 15px 0;
+    }
+
+    .breadcrumb {
+      margin: 0px;
+      padding: 13.5px 0;
+      background: #fff;
+      text-transform: capitalize;
+    }
+
+    .breadcrumb > li + li:before {
+      padding: 0 5px;
+      color: #ccc;
+      content: "/\00a0";
+    }
+  }
+}
+
+/*
+    CONTENT
+*/
+.content {
+  padding: 0 20px;
+  width: 100%;
+}
+
+
+.stat-icon i {
+  font-size: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 100px;
+  padding: 15px 24px;
+  font-weight: 900;
+  display: inline-block;
+}
+
+/*
+  breadcrumbs
+*/
+.breadcrumbs {
+  margin-top: 0;
+}
+
+// Responsive Styles
+
+@media (max-width: 1368px) {
+  .content {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 1024px) {
+  aside.left-panel {
+    padding: 0 20px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 575.99px) {
+  body {
+    display: block;
+  }
+  aside.left-panel {
+    display: block;
+    height: auto;
+    min-height: inherit;
+    padding: 0 15px;
+    width: 100%;
+
+    .navbar {
+      margin-bottom: 0;
+
+      .navbar-header {
+        height: 58px;
+      }
+
+      .navbar-brand {
+        border-bottom: none;
+        display: inline-block;
+        float: left;
+        line-height: 1;
+        margin-top: 15px;
+        min-height: inherit;
+
+        &.hidden {
+          display: none;
+        }
+      }
+
+      .navbar-toggler {
+        float: right;
+        margin-top: 8px;
+      }
+
+      .navbar-nav li {
+        > a {
+          padding: 5px 0;
+        }
+
+        &.menu-item-has-children a:before {
+          top: 5px;
+        }
+      }
+
+      .menu-title {
+        line-height: 30px;
+        padding: 0;
+        margin: 8px 0px;
+      }
+    }
+  }
+  .menutoggle {
+    display: none;
+  }
+  .right-panel {
+    display: block;
+    max-width: 100vh;
+    height: 100vh;
+
+    header.header {
+      padding: 5px 10px 1px 5px;
+    }
+
+    .breadcrumbs {
+      padding: 10px 15px;
+
+      div[class*="col"] {
+        padding: 0;
+      }
+
+      .page-header {
+        min-height: inherit;
+        padding: 0;
+
+        h1 {
+          padding: 5px 0;
+        }
+      }
+    }
+
+    .content {
+      padding: 0 10px;
+
+      .card {
+        .card-title {
+          margin-bottom: 0;
+        }
+
+        .card-footer {
+          padding: 15px 5px;
+
+          ul {
+            margin: 0;
+
+            li {
+              float: left;
+              margin: 5px 0;
+              padding: 0 10px;
+              width: 33.33%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

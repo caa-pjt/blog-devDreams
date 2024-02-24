@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar bg-dark fixed-top" data-bs-theme="dark">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home')  }}">
-            <img src="{{ asset('images/logo_white.png') }}" class="img-fluid" alt="Dev Dream Logo"
-                 style="max-width: 50px"/>
+            <img src="{{ asset('images/logo_white.png') }}" class="img-fluid" alt="Dev Dream Logo"/>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,13 +24,14 @@
                             {{ Auth::user()->username() }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="">
-                                <a @class(['dropdown-item', 'active'=> $className === 'admin.post.index']) href="{{
-                                route('admin.post.index')}}">Les articles</a>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
                             </li>
-                            <li class="">
-                                <a @class(['dropdown-item', 'active'=> $className === 'admin.category.index']) href="{{
-                                route('admin.category.index')}}">Les catégories</a>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.post.index') }}">Articles</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.category.index') }}">Catégories</a>
                             </li>
 
                             <li>
@@ -53,8 +53,8 @@
 
                 <li class="nav-item">
                     @guest
-                        <a @class(['nav-link', 'active'=> $className === 'login']) href="{{ route("login") }}">Me
-                            connecter</a>
+                        <a @class(['nav-link', 'active'=> $className === 'login'])
+                           href="{{ route("login") }}">Me connecter</a>
                     @endguest
                 </li>
             </ul>

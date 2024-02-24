@@ -1,0 +1,55 @@
+/*
+    CARDS
+*/
+.card {
+  border-radius: 0;
+  background: $white;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.08),
+  0 2px 2px -1px rgba(0, 0, 0, 0.2);
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  .user-header {
+    .media {
+      img {
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+      }
+    }
+  }
+
+  .card-header {
+    background: $card-header;
+
+    .card-actions {
+      button {
+        display: block;
+        float: left;
+        width: 50px;
+        padding: 0.75rem 0;
+        margin: 0 !important;
+        color: $white;
+        outline: 0;
+        text-align: center;
+        background: transparent;
+        border: 0;
+        border-left: 1px solid hsla(210, 8%, 51%, 0.4);
+      }
+    }
+  }
+
+  .card-footer {
+    padding: 0.65rem 1.25rem;
+    background-color: $card-bg;
+    border-top: 1px solid $card-border;
+
+    & ul li {
+      display: table-cell;
+      padding: 0 1rem;
+      text-align: center;
+    }
+  }
+}

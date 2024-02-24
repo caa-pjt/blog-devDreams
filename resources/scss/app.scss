@@ -5,6 +5,9 @@
 @import "banner";
 @import "post";
 
+.navbar-brand {
+  max-width: 50px
+}
 
 .bg-repeat-0 {
   background-repeat: no-repeat;
