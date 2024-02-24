@@ -13,7 +13,7 @@ class BlogController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$categoryName = $request->input('category');
+		$categoryName = $request->input('cat');
 		$posts = Post::with('category')->published();
 		
 		if ($categoryName) {

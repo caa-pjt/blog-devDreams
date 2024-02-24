@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="container-fluid">
-        <div id="login" class="row d-flex justify-content-center align-content-center mh-76">
+        <div id="login" class="row d-flex justify-content-center align-content-center mh-76 m-0">
             <div class="card col-md-3 pt-4 px-4 pb-5">
                 <div class="card-body">
                     <div class="mb-5">
@@ -33,7 +33,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-lg mt-2">Se connecter</button>
+                        <button type="submit" class="btn btn-primary btn-lg mt-2">Connection</button>
                     </form>
                 </div>
             </div>

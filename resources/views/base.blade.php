@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dev Dreams')</title>
 
-    @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
-    <!--<img src="{{asset('storage/logo.png')}}" style="max-width: 100px"/>-->
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+
+    @livewireStyles
 </head>
 <body class="pt-5">
 @php
@@ -16,7 +17,7 @@
 
 @include("partiales.navbar")
 
-<div @class(['mt-5 mh-76', 'container' => strpos($className, 'admin') !== false])>
+<div @class(['container-height', 'container' => strpos($className, 'admin') !== false])>
 
     @include("partiales.notification")
 
@@ -26,6 +27,6 @@
 @include("partiales.footer")
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+@livewireScripts
 
 </html>

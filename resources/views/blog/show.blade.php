@@ -41,27 +41,28 @@
                 <h2 class="fs-1">Articles relationnels</h2>
                 <p class="text-body-tertiary fw-bold">Les articles suivants pourraient aussi vous intéresser.</p>
             </div>
-            @foreach($relatedPosts as $post)
+            @foreach($relatedPosts as $relatedPost)
                 <div class="col-md-3 post-item">
                     <!-- Post-->
                     <article class="post">
-                        <div class="post-preview"><a href="{{ route("show", ["slug" => $post->slug, "id" => $post->id])
-                                               }}"><img class="img-fluid" src="{{ $post->image ? $post->imageUrl() :
-                             asset('images/no-img.png') }}" alt=""></a></div>
+                        <div class="post-preview"><a href="{{ route("show", ["slug" => $relatedPost->slug, "id" => $relatedPost->id])
+                                       }}"><img class="img-fluid" src="{{ $relatedPost->image ? $relatedPost->imageUrl() :
+                         asset('images/no-img.png') }}" alt=""></a></div>
                         <div class="post-wrapper">
                             <div class="post-header pt-3">
-                                <h2 class="post-title fs-5"><a class="text-black text-decoration-none" href="{{ route("show", ["slug" => $post->slug, "id" => $post->id])
-                                               }}">{{ $post->title }}</a></h2>
+                                <h2 class="post-title fs-5"><a class="text-black text-decoration-none" href="{{ route("show", ["slug" => $relatedPost->slug, "id" => $relatedPost->id])
+                                       }}">{{ $relatedPost->title }}</a></h2>
                             </div>
                             <div class="post-content">
-                                <p>{{ $post->excerpt() }}</p>
-                                <p><a class="text-decoration-none" href="{{ route("show", ["slug" => $post->slug, "id" => $post->id])
-                                               }}">Lire plus</a></p>
+                                <p>{{ $relatedPost->excerpt() }}</p>
+                                <p><a class="text-decoration-none" href="{{ route("show", ["slug" => $relatedPost->slug, "id" => $relatedPost->id])
+                                       }}">Lire plus</a></p>
                             </div>
                         </div>
                     </article>
                 </div>
             @endforeach
+
         </div>
     </section>
 
