@@ -40,7 +40,7 @@
                             <tr class="">
                                 <th>#</th>
                                 <th>Titre</th>
-                                <th>Slug</th>
+                                <th>A la une</th>
                                 <th>Création</th>
                                 <th>Catégorie</th>
                                 <th>Status</th>
@@ -50,23 +50,30 @@
 
                             <tbody>
                             @foreach ($posts as $post)
-                                <tr>
+                                <tr class="align-middle">
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ $post->slug }}</td>
+                                    <td>
+                                        @if($post->image)
+                                            <img src="{{ $post->imageUrl() }}" alt="image à la une" style="width:
+                                    50px">
+                                        @else
+                                            aucune image
+                                        @endif
+                                    </td>
                                     <td>{{ $post->created_at->format('d/m/Y') }}</td>
                                     <td>
                                         @if($post->category)
                                             {{ $post->category->name }}
                                         @else
-                                            null
+                                            -
                                         @endif
                                     </td>
                                     <td>
                                         <span @class([$post->published == 1 ? 'text-success' : 'text-danger'])>{{ $post->published == 1 ? 'Actif' : 'Inactif' }}</span>
                                     </td>
                                     <td>
-                                        <div class="d-flex justify-content-end gap-2 align-items-baseline">
+                                        <div class="d-flex justify-content-end gap-2 align-items-center">
                                             <a class="btn btn-outline-secondary btn-sm"
                                                href="{{ route('admin.post.edit', ['post' => $post]) }}">
                                                 <i class="bi bi-pencil"></i> Editer

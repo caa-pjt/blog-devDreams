@@ -39,7 +39,7 @@
                     <div class="card-body table-responsive">
                         <table class="table table-hover">
                             <thead>
-                            <tr class="">
+                            <tr class="align-middle">
                                 <th>#</th>
                                 <th>Nom de la catégorie</th>
                                 <th class="text-end">Actions</th>
@@ -48,7 +48,7 @@
 
                             <tbody>
                             @foreach ($categories as $category)
-                                <tr>
+                                <tr class="align-middle">
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>
