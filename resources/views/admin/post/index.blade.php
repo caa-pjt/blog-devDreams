@@ -19,17 +19,15 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="align-items-center d-flex flex-wrap gap-3 justify-content-between">
-                            <div id="bootstrap-data-table_filter" class="col-lg-2 col-md-6 col-sm-12">
+                            <div id="bootstrap-data-table_filter" class="col-lg-6 col-md-8 col-sm-12">
                                 <label class="visually-hidden" for="inlineFormInputGroupUsername">Rechercher</label>
-                                <div class="input-group">
-                                    <div class="input-group-text">Search</div>
-                                    <input
-                                            type="text"
-                                            name="q"
-                                            class="form-control"
-                                            id="inlineFormInputGroupUsername"
-                                            placeholder="Filtrer...."/>
-                                </div>
+                                <form action="?search" method="get" class="input-group">
+                                    <input name="search" type="text" class="form-control"
+                                           value="{{ $search }}"
+                                           id="inlineFormInputGroupUsername"
+                                           placeholder="Filtrer..">
+                                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                                </form>
                             </div>
                             <a href="{{route('admin.post.create')}}" class="btn btn-primary">Nouvel article</a>
                         </div>

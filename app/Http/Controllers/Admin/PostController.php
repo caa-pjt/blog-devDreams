@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\PostFilterRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +17,20 @@ class PostController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(): view
+	public function index(Request $request): view
 	{
-		$posts = Post::with(['category', 'user'])->orderBy("created_at", "desc")->paginate(10);
-		return view('admin.post.index', ['posts' => $posts]);
+		
+		$search = $request->input('search');
+		
+		$query = Post::with(['category', 'user'])->orderBy("created_at", "desc");
+		
+		if ($search) {
+			$query->where('title', 'LIKE', "%$search%");
+		}
+		
+		$posts = $query->paginate(10);
+		
+		return view('admin.post.index', ['posts' => $posts, 'search' => $search]);
 	}
 	
 	/**

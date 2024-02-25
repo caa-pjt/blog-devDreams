@@ -21,7 +21,7 @@ class BlogIndex extends Component
 	
 	public function render()
 	{
-		$postsQuery = Post::with(['category', 'user'])->published();
+		$postsQuery = Post::with('category')->published();
 		
 		if ($this->cat) {
 			$postsQuery->whereHas('category', function ($query) {
