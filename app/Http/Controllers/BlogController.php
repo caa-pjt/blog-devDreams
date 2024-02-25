@@ -14,7 +14,7 @@ class BlogController extends Controller
 	public function index(Request $request)
 	{
 		$categoryName = $request->input('cat');
-		$posts = Post::with('category')->published();
+		$posts = Post::with(['category', 'user'])->published();
 		
 		if ($categoryName) {
 			$posts->whereHas('category', function ($query) use ($categoryName) {
@@ -34,7 +34,7 @@ class BlogController extends Controller
 	public function show(string $slug, string $id)
 	{
 		
-		$post = Post::with('category')->findOrFail($id);
+		$post = Post::with(['category', 'user'])->findOrFail($id);
 		$relatedPosts = Post::where('category_id', $post->category_id)
 			->published()
 			->whereNotIn('id', [$post->id])

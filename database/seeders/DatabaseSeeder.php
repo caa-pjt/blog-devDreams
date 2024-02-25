@@ -10,25 +10,20 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        User::create([
-            "name" => "admin",
-            "email" => "admin@gmail.com",
-            'email_verified_at' => now(),
-            "password" => Hash::make('0000')
-        ]);
-
-        Post::factory(30)->create();
-    }
+	/**
+	 * Seed the application's database.
+	 */
+	public function run(): void
+	{
+		// \App\Models\User::factory(10)->create();
+		
+		// \App\Models\User::factory()->create([
+		//     'name' => 'Test User',
+		//     'email' => 'test@example.com',
+		// ]);
+		
+		
+		// Créer des posts associés à l'utilisateur admin
+		Post::factory(30)->create();
+	}
 }

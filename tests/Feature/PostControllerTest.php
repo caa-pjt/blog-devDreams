@@ -168,6 +168,35 @@ class PostControllerTest extends TestCase
 		$this->assertDatabaseHas('posts', array_merge(['id' => $post->id], $updatedData));
 	}
 	
+	/**
+	 * Teste si la méthode store crée un nouvel article assigné à l'utilisateur connecté.
+	 *
+	 * @return void
+	 */
+	public function test_store_method_creates_new_post_assigned_to_authenticated_user()
+	{
+		
+		$this->signInUser();
+		
+		$image = UploadedFile::fake()->image('post.jpg');
+		
+		$postData = Post::factory()->raw([
+			'image' => $image,
+		]);
+		
+		$response = $this->post(route('admin.post.store'), $postData);
+		
+		$response->assertRedirect(route('admin.post.index'));
+		
+		$userId = auth()->id();
+		
+		$this->assertDatabaseHas('posts', [
+			'title' => $postData['title'],
+			'user_id' => $userId,
+		]);
+		
+	}
+	
 	
 	/**
 	 * Teste si la méthode destroy supprime un article.

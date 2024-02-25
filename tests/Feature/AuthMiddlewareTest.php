@@ -5,12 +5,14 @@ namespace Tests\Feature;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class AuthMiddlewareTest extends TestCase
 {
 	use RefreshDatabase;
+	use RefreshDatabase, WithFaker;
 	
 	/**
 	 * Test de l'authentification pour l'accès aux actions liées au modèle Post.
@@ -19,7 +21,12 @@ class AuthMiddlewareTest extends TestCase
 	 */
 	public function test_user_must_be_authenticated_for_post_actions()
 	{
-		Post::factory()->create();
+		// Créer un utilisateur
+		$user = User::factory()->create([
+			'email' => $this->faker->unique()->safeEmail(),
+		]);
+		
+		Post::factory()->create(['user_id' => $user->id]);
 		
 		// Utilisateur non connecté
 		$response = $this->get(route('admin.post.index'));

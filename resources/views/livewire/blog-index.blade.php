@@ -49,7 +49,8 @@
                         </h3>
                         <p>{{ $post->excerpt(250) }}</p>
                         <hr class="my-4">
-                        <div class="text-end">
+                        <div class="d-flex justify-content-between">
+                            <p>Par : {{ $post->user->name }}</p>
                             <a class="text-black"
                                wire:click.prevent="redirectToPost('{{ $post->slug }}', {{ $post->id }})"
                                href="{{ route("show", ["slug" => $post->slug, "id" => $post->id]) }}">
