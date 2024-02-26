@@ -20,6 +20,8 @@ class PostsTable extends Component
 	// Récupérer la valeur de recherche à partir de l'URL si elle existe
 	protected $queryString = [
 		'search' => ['except' => ''],
+		'field' => ['except' => ''],
+		'orderDirection' => ['except' => ''],
 	];
 	
 	public function mount(Request $request)
