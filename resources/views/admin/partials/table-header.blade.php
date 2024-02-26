@@ -6,8 +6,9 @@
 
 @endphp
 <th wire:click="setOrderField('{{ $field }}')">
-    {{ $label }}
-    <a href="{{ route('admin.post.index', ['order' => $field, 'direction' => $orderDirection === 'asc' ? 'desc' : 'asc']) }}">
+    <a wire:click.prevent href="{{ route('admin.post.index', ['order' => $field, 'direction' => $orderDirection === 'asc' ? 'desc' :
+    'asc']) }}" class="link-dark">
+        {{ $label }}
         @if($orderField === $field)
             @if($orderDirection === 'asc')
                 <i class="bi bi-arrow-up"></i>
