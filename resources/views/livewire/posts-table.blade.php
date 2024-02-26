@@ -20,15 +20,15 @@
     <div class="card-body table-responsive">
         <table class="table table-hover">
             <thead>
-            <tr class="">
-                <th>#</th>
-                <th>Titre</th>
-                <th>A la une</th>
-                <th>Création</th>
-                <th>Catégorie</th>
-                <th>Status</th>
-                <th class="text-end">Actions</th>
-            </tr>
+            <th>#</th>
+            @include('admin.partials.table-header', ['field' => 'title', 'label' => 'Titre', 'orderField' => $field, 'orderDirection' => $orderDirection])
+
+            <th>Image à la une</th>
+            @include('admin.partials.table-header', ['field' => 'created_at', 'label' => 'Création', 'orderField' => $field, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'category_id', 'label' => 'Catégorie', 'orderField' => $field, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'published', 'label' => 'Status', 'orderField' => $field, 'orderDirection' => $orderDirection])
+            <th class="text-end">Actions</th>
+
             </thead>
 
             <tbody>

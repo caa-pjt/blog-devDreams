@@ -17,20 +17,31 @@ class PostController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request): view
+	public function index(Request $request)
 	{
 		
 		$search = $request->input('search');
+		$field = $request->input('order', 'title');
 		
-		$query = Post::with(['category', 'user'])->orderBy("created_at", "desc");
+		$orderDirection = $request->input('direction', 'desc');
+		
+		
+		$query = Post::with(['category', 'user']);
 		
 		if ($search) {
 			$query->where('title', 'LIKE', "%$search%");
 		}
 		
+		$query->orderBy($field, $orderDirection);
+		
 		$posts = $query->paginate(10);
 		
-		return view('admin.post.index', ['posts' => $posts, 'search' => $search]);
+		return view('admin.post.index', [
+			'posts' => $posts,
+			'search' => $search,
+			'field' => $field,
+			'orderDirection' => $orderDirection,
+		]);
 	}
 	
 	/**
