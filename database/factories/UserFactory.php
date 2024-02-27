@@ -34,7 +34,7 @@ class UserFactory extends Factory
 		 */
 		
 		return [
-			'name' => 'admin',
+			'name' => 'Admin',
 			'email' => 'admin@gmail.com',
 			'email_verified_at' => now(),
 			'password' => Hash::make('0000'),

@@ -22,7 +22,7 @@
                             <ul class="post-meta list-inline fw-bold">
                                 <li class="list-inline-item">Publié le {{ $post->created_at->format('d M Y') }}</li>
                                 <li class="list-inline-item">Dans la catégorie / <span class="text-capitalize">{{
-                                $post->category->name
+                                $post->category->getName()
                                 }}</span></li>
                             </ul>
                         </div>
@@ -47,11 +47,11 @@
                     <article class="post">
                         <div class="post-preview"><a href="{{ route("show", ["slug" => $relatedPost->slug, "id" => $relatedPost->id])
                                        }}"><img class="img-fluid" src="{{ $relatedPost->image ? $relatedPost->imageUrl() :
-                         asset('images/no-img.png') }}" alt=""></a></div>
+                         asset('images/no-img.png') }}" alt="Image à la une"></a></div>
                         <div class="post-wrapper">
                             <div class="post-header pt-3">
                                 <h2 class="post-title fs-5"><a class="text-black text-decoration-none" href="{{ route("show", ["slug" => $relatedPost->slug, "id" => $relatedPost->id])
-                                       }}">{{ $relatedPost->title }}</a></h2>
+                                       }}">{{ $relatedPost->getTitle() }}</a></h2>
                             </div>
                             <div class="post-content">
                                 <p>{{ $relatedPost->excerpt() }}</p>

@@ -3,15 +3,15 @@
         <ul class="list-inline text-center" id="category">
             <li class="list-inline-item">
                 <a wire:click.prevent="filterByCategory('')" href="{{ route('home') }}"
-                   class="btn btn-light btn-lg @if(empty($cat))
-                    active
-                @endif">Tous</a>
+                        @class(['btn btn-light btn-lg', 'active' => empty($cat) ])>Tous</a>
             </li>
             @foreach($categories as $category)
                 <li class="list-inline-item">
-                    <a wire:click.prevent="filterByCategory('{{ $category->name }}')"
-                       href="{{ url()->current() }}?category={{ $category->name }}"
-                       class="btn btn-light btn-lg @if($cat === $category->name) active @endif">{{ $category->name }}</a>
+                    <a wire:click.prevent="filterByCategory('{{ $category }}')"
+                       href="{{ route('home', ['cat' => $category]) }}"
+                            @class(['btn btn-light btn-lg text-capitalize', 'active' => $cat === $category ])>
+                        {{ $category }}
+                    </a>
                 </li>
             @endforeach
         </ul>
@@ -30,27 +30,26 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="badge text-bg-secondary">
-                                @if($post->category)
-                                    {{ $post->category->name }}
-                                @else
-                                    null
-                                @endif
-                            </span>
-                            <span class="fs-6 text-body-secondary border-start ps-3 ms-3">
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                            @if($post->category)
+                                <span class="badge text-bg-secondary">
+                                    {{ $post->category->getName() }}
+                                </span>
+                            @endif
+                            <span class="text-body-secondary">
                                 {{ $post->created_at->format('d M Y') }}
                             </span>
                         </div>
                         <h3 class="h4 mb-3">
                             <a class="text-black"
                                href="{{ route("show", ["slug" => $post->slug, "id" => $post->id]) }}"
-                               wire:click.prevent="redirectToPost('{{ $post->slug }}', {{ $post->id }})">{{ $post->title }}</a>
+                               wire:click.prevent="redirectToPost('{{ $post->slug }}', {{ $post->id }})">{{
+                               $post->getTitle() }}</a>
                         </h3>
                         <p>{{ $post->excerpt(250) }}</p>
                         <hr class="my-4">
                         <div class="d-flex justify-content-between">
-                            <p>Par : {{ $post->user->name }}</p>
+                            <p>Par : {{ $post->user->getName() }}</p>
                             <a class="text-black"
                                wire:click.prevent="redirectToPost('{{ $post->slug }}', {{ $post->id }})"
                                href="{{ route("show", ["slug" => $post->slug, "id" => $post->id]) }}">

@@ -5,13 +5,19 @@
 
 @section('content')
 
-    <div class="row mt-5 mb-4">
-        <h1>Editer la catégorie</h1>
-    </div>
+    <div class="content mt-4">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h1 class="fs-2">Editer la catégorie</h1>
+            </div>
+        </div>
 
 
-    <div class="row">
-        @include('admin.partials.form-category')
+        <div class="row">
+            <div class="col-md-12">
+                @include('admin.partials.form-category')
+            </div>
+        </div>
     </div>
 
 @endsection

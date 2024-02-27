@@ -9,11 +9,20 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
+	/*
+	 * Afficher le formulaire de connexion
+	 */
 	public function login(): view
 	{
 		return view("auth.login");
 	}
 	
+	/**
+	 * Gérer une tentative d'authentification.
+	 *
+	 * @param AuthFilterRequest $request
+	 * @return RedirectResponse|view
+	 */
 	public function doLogin(AuthFilterRequest $request): RedirectResponse|view
 	{
 		$user = $request->validated();
@@ -29,6 +38,11 @@ class AuthController extends Controller
 		
 	}
 	
+	/**
+	 * Déconnecter l'utilisateur.
+	 *
+	 * @return RedirectResponse
+	 */
 	public function logout(): RedirectResponse
 	{
 		Auth::logout();

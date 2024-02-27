@@ -12,45 +12,45 @@ class FormInput extends Component
 	 * Label de l'input
 	 * @var string
 	 */
-	public $label;
+	public string $label;
 	/**
 	 * Nom du champ de l'input
 	 * @var string
 	 */
-	public $name;
+	public string $name;
 	/**
 	 * Valeur de l'input
 	 * @var mixed|string
 	 */
-	public $value;
+	public mixed $value;
 	/**
 	 * Type de l'input
 	 * Types supportés : text, textarea, checkbox, file, select
 	 * @var string
 	 */
-	public $type;
+	public string $type;
 	/**
 	 * Placeholder le l'input
 	 * @var string
 	 */
-	public $placeholder;
+	public string $placeholder;
 	/**
 	 * Class css du container
 	 * @var string
 	 */
-	public $class;
+	public string $class;
 	/**
 	 * Option de l'input de type select (seulement applicable pour l'input de type select)
 	 * @var array
 	 */
-	public $options;
+	public array $options;
 	
 	/**
 	 * Create a new component instance.
 	 *
 	 * @param string $label Le libellé de l'entrée.
 	 * @param string $name Le nom de l'entrée.
-	 * @param mixed $value La valeur de l'entrée.
+	 * @param string|null $value La valeur de l'entrée.
 	 * @param string $type Le type de l'entrée (par défaut : 'text').
 	 * @param string $placeholder Le texte d'aide pour l'entrée (par défaut : vide).
 	 * @param string $class Les classes CSS pour le conteneur de l'entrée (par défaut : 'row g-1 mb-3').
@@ -61,7 +61,7 @@ class FormInput extends Component
 	public function __construct(
 		string $label,
 		string $name,
-			   $value = '',
+		mixed  $value = '',
 		string $type = 'text',
 		string $placeholder = '',
 		string $class = 'row g-1 mb-3',

@@ -4,21 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryFilterRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\Category;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use View;
 
 class CategoryController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request): view
+	public function index(Request $request): Factory|\Illuminate\Contracts\View\View|Application
 	{
 		
-		$search = $request->input('search');
+		$search = $request->get('search');
 		
 		$query = Category::orderBy("created_at", "desc");
 		
@@ -26,7 +28,7 @@ class CategoryController extends Controller
 			$query->where('name', 'LIKE', "%$search%");
 		}
 		
-		$categories = $query->paginate(15);
+		$categories = $query->paginate(10);
 		
 		return View("admin.category.index", ['categories' => $categories]);
 		
@@ -47,7 +49,7 @@ class CategoryController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create(): view
+	public function create(): Factory|\Illuminate\Contracts\View\View|Application
 	{
 		$category = new Category();
 		
@@ -57,7 +59,7 @@ class CategoryController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(Category $category): view
+	public function edit(Category $category): Factory|\Illuminate\Contracts\View\View|Application
 	{
 		return view('admin.category.edit', ['category' => $category]);
 	}

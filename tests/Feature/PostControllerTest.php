@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PostControllerTest extends TestCase
@@ -81,6 +82,9 @@ class PostControllerTest extends TestCase
 		$this->assertDatabaseHas('posts', [
 			'title' => $postData['title']
 		]);
+		
+		// Ici il faut supprimer les images uploadées pour ne pas encombrer le disque
+		Storage::disk('public')->deleteDirectory('images');
 	}
 	
 	
@@ -194,6 +198,9 @@ class PostControllerTest extends TestCase
 			'title' => $postData['title'],
 			'user_id' => $userId,
 		]);
+		
+		// Ici il faut supprimer les images uploadées pour ne pas encombrer le disque
+		Storage::disk('public')->deleteDirectory('images');
 		
 	}
 	

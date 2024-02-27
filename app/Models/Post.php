@@ -14,11 +14,19 @@ class Post extends Model
 	
 	protected $fillable = ["title", "slug", "content", "category_id", "published", "image", "user_id"];
 	
+	/**
+	 * Retourne la catégorie de l'article
+	 * @return BelongsTo
+	 */
 	public function category(): BelongsTo
 	{
 		return $this->belongsTo(Category::class);
 	}
 	
+	/**
+	 * Retourne l'utilisateur de l'article
+	 * @return BelongsTo
+	 */
 	public function user(): BelongsTo
 	{
 		return $this->belongsTo(User::class);
@@ -43,6 +51,15 @@ class Post extends Model
 	public function imageUrl(): string
 	{
 		return Storage::disk('public')->url($this->image);
+	}
+	
+	/**
+	 * Retourne le nom de l'article en majuscule
+	 * @return string
+	 */
+	public function getTitle(): string
+	{
+		return Str::title($this->title);
 	}
 	
 	/**

@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class BlogController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request)
+	public function index(Request $request): view
 	{
 		$categoryName = $request->input('cat');
 		$posts = Post::with(['category', 'user'])->published();
@@ -22,8 +24,9 @@ class BlogController extends Controller
 			});
 		}
 		
-		$posts = $posts->paginate(5);
-		$categories = Category::all();
+		$posts = $posts->paginate(10);
+		
+		$categories = Category::with('post')->has('post')->pluck('name')->toArray();
 		
 		return view('blog.index', ['posts' => $posts, 'categories' => $categories]);
 	}
@@ -31,7 +34,7 @@ class BlogController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(string $slug, string $id)
+	public function show(string $slug, string $id): view|RedirectResponse
 	{
 		
 		$post = Post::with(['category', 'user'])->findOrFail($id);

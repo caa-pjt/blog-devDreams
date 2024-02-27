@@ -41,7 +41,7 @@
                             <img src="{{ $post->imageUrl() }}" alt="image à la une" style="width:
                                     50px">
                         @else
-                            aucune image
+                            Aucune image
                         @endif
                     </td>
                     <td>{{ $post->created_at->format('d/m/Y') }}</td>

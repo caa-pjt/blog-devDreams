@@ -38,7 +38,7 @@ class PostFilterRequest extends FormRequest
 		];
 	}
 	
-	public function prepareForValidation()
+	public function prepareForValidation(): void
 	{
 		$this->merge([
 			'slug' => $this->input('slug') ?: Str::slug($this->input('title')),

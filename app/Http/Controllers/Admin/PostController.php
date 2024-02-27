@@ -17,11 +17,11 @@ class PostController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request)
+	public function index(Request $request): view
 	{
 		
 		$search = $request->input('search');
-		$field = $request->input('order', 'title');
+		$field = $request->input('order', 'created_at');
 		
 		$orderDirection = $request->input('direction', 'desc');
 		
@@ -79,7 +79,7 @@ class PostController extends Controller
 		$image = $request->validated('image');
 		
 		// Si il y a des erreurs de validation, renvoi des erreurs
-		if ($image === null || $image->getError()) {
+		if (!$image || !$image->isValid()) {
 			return $data;
 		}
 		

@@ -45,12 +45,20 @@ class User extends Authenticatable
 		'password' => 'hashed',
 	];
 	
+	/**
+	 * Retourne la liste des articles de l'utilisateur
+	 * @return HasMany
+	 */
 	public function post(): HasMany
 	{
 		return $this->hasMany(Post::class);
 	}
 	
-	public function userName(): string
+	/**
+	 * Retourne le nom de l'utilisateur en majuscule
+	 * @return string
+	 */
+	public function getName(): string
 	{
 		return Str::title($this->name);
 	}
