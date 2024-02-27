@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,18 +12,21 @@ class PostsTable extends Component
 {
 	use WithPagination;
 	
+	#[Url(except: '')]
 	public string $search = '';
+	#[Url]
 	public string $field = 'title';
+	#[Url]
 	public string $orderDirection = 'asc';
 	
 	protected $paginationTheme = 'bootstrap';
 	
 	// Récupérer la valeur de recherche à partir de l'URL si elle existe
-	protected $queryString = [
-		'search' => ['except' => ''],
-		'field' => ['except' => ''],
-		'orderDirection' => ['except' => ''],
-	];
+	// protected $queryString = [
+	//'search' => ['except' => ''],
+	//'field' => ['except' => ''],
+	//'orderDirection' => ['except' => ''],
+	//];
 	
 	public function mount(Request $request)
 	{
