@@ -42,7 +42,7 @@ class PostFilterRequest extends FormRequest
 	{
 		$this->merge([
 			'slug' => $this->input('slug') ?: Str::slug($this->input('title')),
-			"published" => ($this->input('published') == 1) ? 1 : 0,
+			"published" => $this->input('published') == 1 ? 1 : 0,
 			'user_id' => Auth::id(),
 		]);
 	}

@@ -27,15 +27,16 @@
 
     @elseif($type === 'checkbox')
         <div class="form-check form-switch">
-            <input class="form-check-input" id="{{ $name }}" type="checkbox" name="{{ $name }}"
-                   value="1" {{ $value ? 'checked' : '' }}> <!-- {{ old($name, $value) == 1 ? 'checked' : '' }} -->
+            <input class="form-check-input" id="{{ $name }}" name="{{ $name }}" type="checkbox"
+                   value="1"{{ (old($name) == 1 || $value == 1) ? 'checked' : ''}}>
+
             <label class="form-check-label" for="{{ $name }}">{{ $label }}</label>
         </div>
 
     @elseif($type === 'select')
 
         <select class="form-select @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}">
-            
+
             <option disabled {{ (is_null(old($name)) && is_null($value)) ? 'selected' : ''}}>
                 Choisir une option
             </option>
