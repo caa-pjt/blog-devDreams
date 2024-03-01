@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BlogController::class, 'index'])->name('home');
 Route::get('/{slug}-{id}', [BlogController::class, 'show'])->where([
 	"id" => "[0-9]+",
-	"slug" => "[a-z\-]+"
+	"slug" => "[a-z0-9\-]+"
 ])->name('show');
 
 Route::get("login", [AuthController::class, 'login'])->name('login')->middleware('guest');

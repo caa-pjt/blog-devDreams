@@ -58,6 +58,10 @@
                     <td>
                         <div class="d-flex justify-content-end gap-2 align-items-center">
                             <a class="btn btn-outline-secondary btn-sm"
+                               href="{{ route('show', ['slug' => $post->slug, 'id' => $post->id ]) }}">
+                                <i class="bi bi-eye"></i> Voir
+                            </a>
+                            <a class="btn btn-outline-secondary btn-sm"
                                href="{{ route('admin.post.edit', ['post' => $post, 'page' => $this->page ]) }}">
                                 <i class="bi bi-pencil"></i> Editer
                             </a>

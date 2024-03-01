@@ -7,7 +7,9 @@
                         <h1 class="post-title text-uppercase mb-2" title="{{ $post->title }}">{{ $post->title }}</h1>
                         <div class="banner-info fw-lighter d-flex align-items-center gap-3">
                             <p class="fs-5">Mis à jour le <span>{{ $post->updated_at->format('d M Y') }}</span></p>
-                            <p class="badge text-bg-secondary p-3 text-uppercase">{{ $post->category->name }}</p>
+                            @if($post->category !== null)
+                                <p class="badge text-bg-secondary p-3 text-uppercase">{{ $post->category->name }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>

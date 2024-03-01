@@ -21,9 +21,11 @@
                         <div class="post-header">
                             <ul class="post-meta list-inline fw-bold">
                                 <li class="list-inline-item">Publié le {{ $post->created_at->format('d M Y') }}</li>
-                                <li class="list-inline-item">Dans la catégorie / <span class="text-capitalize">{{
-                                $post->category->getName()
-                                }}</span></li>
+                                @if($post->category !== null)
+                                    <li class="list-inline-item">Dans la catégorie / <span
+                                                class="text-capitalize">{{ $post->category->getName() }}</span>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <div class="post-content mt-4">

@@ -1,20 +1,22 @@
 <div id="posts">
     <div class="row mt-5 mb-5">
-        <ul class="list-inline text-center" id="category">
-            <li class="list-inline-item">
-                <a wire:click.prevent="filterByCategory('')" href="{{ route('home') }}"
-                        @class(['btn btn-light btn-lg', 'active' => empty($cat) ])>Tous</a>
-            </li>
-            @foreach($categories as $category)
+        @if(!empty($categories))
+            <ul class="list-inline text-center" id="category">
                 <li class="list-inline-item">
-                    <a wire:click.prevent="filterByCategory('{{ $category }}')"
-                       href="{{ route('home', ['cat' => $category]) }}"
-                            @class(['btn btn-light btn-lg text-capitalize', 'active' => $cat === $category ])>
-                        {{ $category }}
-                    </a>
+                    <a wire:click.prevent="filterByCategory('')" href="{{ route('home') }}"
+                            @class(['btn btn-light btn-lg', 'active' => empty($cat) ])>Tous</a>
                 </li>
-            @endforeach
-        </ul>
+                @foreach($categories as $category)
+                    <li class="list-inline-item">
+                        <a wire:click.prevent="filterByCategory('{{ $category }}')"
+                           href="{{ route('home', ['cat' => $category]) }}"
+                                @class(['btn btn-light btn-lg text-capitalize', 'active' => $cat === $category ])>
+                            {{ $category }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </div>
 
     @forelse($posts as $post)

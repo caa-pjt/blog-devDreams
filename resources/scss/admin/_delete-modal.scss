@@ -1,0 +1,13 @@
+
+.delete-modal .modal-icon {
+  padding: 9px 12px 10px 12px;
+  background-color: #c2555f;
+
+  &::before {
+    font-size: 1.7em;
+  }
+}
+
+.delete-modal .modal-footer {
+  border-top: 0px;
+}

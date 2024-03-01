@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,7 +44,7 @@ class BlogIndex extends Component
 	}
 	
 	
-	public function redirectToPost($slug, $id): RedirectResponse
+	public function redirectToPost($slug, $id)
 	{
 		return redirect()->route('show', ['slug' => $slug, 'id' => $id]);
 	}
