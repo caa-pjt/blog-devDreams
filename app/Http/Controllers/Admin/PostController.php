@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+	protected int $page = 1;
+	
 	/**
 	 * Display a listing of the resource.
 	 */
 	public function index(Request $request): view
 	{
-		
+		$page = $request->query->get("page");
 		$search = $request->input('search');
-		$field = $request->input('order', 'created_at');
-		
-		$orderDirection = $request->input('direction', 'desc');
+		$field = $request->session()->get('orderBy', 'created_at') ?? $request->input('order', 'created_at');
+		$orderDirection = $request->session()->get('direction', 'asc') ?? $request->input('direction', 'desc');
 		
 		
 		$query = Post::with(['category', 'user']);
@@ -41,6 +42,7 @@ class PostController extends Controller
 			'search' => $search,
 			'field' => $field,
 			'orderDirection' => $orderDirection,
+			'page' => $page
 		]);
 	}
 	
@@ -52,8 +54,11 @@ class PostController extends Controller
 		
 		$post->create($this->setPostData($post, $request));
 		
-		return redirect()->route("admin.post.index")
-			->with("success", "Le post à bien été créé !");
+		// Stockez le champ de tri choisi dans la session
+		session(['orderBy' => 'created_at']);
+		session(['direction' => 'desc']);
+		
+		return redirect()->route("admin.post.index")->with(["success", "Le post à bien été créé !", "orderBy" => "created_at", "direction" => "asc"]);
 	}
 	
 	/**
@@ -109,6 +114,8 @@ class PostController extends Controller
 	 */
 	public function update(PostFilterRequest $request, Post $post): RedirectResponse
 	{
+		session(['page', $request->query->get("page")]);
+		
 		$post->update($this->setPostData($post, $request));
 		return redirect()->route("admin.post.index")->with("success", "Article mis à jour !");
 	}
@@ -119,7 +126,7 @@ class PostController extends Controller
 	public function destroy(Post $post): RedirectResponse
 	{
 		
-		if ($post) {
+		if ($post->id) {
 			
 			// Supprimer l'article
 			if ($post->image) {

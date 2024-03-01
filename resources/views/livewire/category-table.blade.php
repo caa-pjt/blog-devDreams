@@ -29,7 +29,7 @@
             </thead>
 
             <tbody>
-            @foreach ($categories as $category)
+            @forelse($categories as $category)
                 <tr class="align-middle">
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
@@ -50,7 +50,11 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7">Aucune catégorie trouvé :(</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
         {{ $categories->links() }}

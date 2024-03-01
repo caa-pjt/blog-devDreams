@@ -44,9 +44,8 @@ docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id 
 
 ### Ajouter des fausses données à la DB
 
-```bash
-./vendor/bin/sail artisan db:seed
-```
+- Completer la DB `./vendor/bin/sail artisan db:seed`
+- Remise à 0 et seeds `./vendor/bin/sail artisan migrate:fresh --seed`
 
 ### Tester l'application
 

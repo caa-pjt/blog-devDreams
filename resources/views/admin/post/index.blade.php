@@ -6,7 +6,7 @@
 @section('content')
 
     <!-- Posts content -->
-    <div class="content mt-4">
+    <div class="mt-4">
         <div class="row">
             <div class="col mb-4">
                 <h1 class="fs-2">Gestion des articles</h1>
@@ -14,7 +14,9 @@
 
             <!--Articles -->
             <div class="col-md-12">
-                <livewire:posts-table/>
+
+                <livewire:posts-table wire:change="flashMessages"/>
+                
             </div>
             <!-- END Articles -->
         </div>

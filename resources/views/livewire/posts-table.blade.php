@@ -32,8 +32,8 @@
             </thead>
 
             <tbody>
-            @foreach ($posts as $post)
-                <tr class="align-middle">
+            @forelse ($posts as $post)
+                <tr class="align-middle" wire:key='{{ $post->id }}'>
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>
@@ -58,24 +58,38 @@
                     <td>
                         <div class="d-flex justify-content-end gap-2 align-items-center">
                             <a class="btn btn-outline-secondary btn-sm"
-                               href="{{ route('admin.post.edit', ['post' => $post]) }}">
+                               href="{{ route('admin.post.edit', ['post' => $post, 'page' => $this->page ]) }}">
                                 <i class="bi bi-pencil"></i> Editer
                             </a>
-                            <form action="{{ route('admin.post.destroy', ['post' => $post, "page" => request()->query('page')]) }}"
-                                  method="post">
-                                @csrf
-                                @method("DELETE")
-                                <button onclick="return confirm('Voulez-vous vraiment supprimer l\'article ?') "
-                                        type="submit" class="btn btn-outline-danger btn-sm"><i
-                                            class="bi bi-trash"></i> Supprimer
-                                </button>
-                            </form>
+                            <button wire:click.prevent="postData({{ $post }}, '{{ route('admin.post.destroy',['post' =>
+                            $post ]) }}')"
+                                    type="button"
+                                    class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> Supprimer
+                            </button>
                         </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7">Aucun article trouvé :(</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
+
         {{ $posts->links() }}
     </div>
+    @if(count($posts)  > 0)
+        @include('admin.partials.delete-modal')
+    @endif
 </div>
+
+
+<script>
+    function openModal() {
+        // Déclencher l'événement personnalisé "open-modal"
+        console.log('openModal');
+        window.dispatchEvent(new Event("open-modal"));
+    }
+</script>

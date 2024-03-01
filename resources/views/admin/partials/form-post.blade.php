@@ -2,7 +2,8 @@
     $methode = $post->title ? "PUT" : "POST";
 @endphp
 
-<form action="{{ route($post->title ? 'admin.post.update' : 'admin.post.store', [$post]) }}" method="post"
+<form action="{{ route($post->title ? 'admin.post.update' : 'admin.post.store', ['post' => $post, 'page' => request()->query->get("page") ]) }}"
+      method="post"
       enctype="multipart/form-data">
     @csrf
     @method( $methode )

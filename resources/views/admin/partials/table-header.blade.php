@@ -16,8 +16,9 @@
     }
 
 @endphp
-<th wire:click="setOrderField('{{ $field }}')">
-    <a wire:click.prevent href="{{ route('admin.post.index', $currentQuery) }}" class="link-dark">
+<th>
+    <a wire:click.prevent="setOrderField('{{ $field }}')" href="{{ route('admin.post.index', $currentQuery) }}"
+       class="link-dark">
         {{ $label }}
         @if($orderField === $field)
             @if($orderDirection === 'asc')

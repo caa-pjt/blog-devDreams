@@ -1,11 +1,11 @@
-@if (session('success'))
-    <div class="alert alert-success mt-3">
-        {{ session('success') }}
+@if (session()->has('error'))
+    <div class="alert alert-warning mt-3">
+        {{ session('error') }}
     </div>
 @endif
 
-@if (session('error'))
-    <div class="alert alert-danger mt-3">
-        {{ session('error') }}
+@if (session()->has('success'))
+    <div class="alert alert-success mt-3">
+        {{ session('success') }}
     </div>
 @endif

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dev Dreams')</title>
 
-    @vite(['resources/scss/admin.scss', 'resources/js/app.js'])
+    @vite(['resources/scss/admin.scss', 'resources/js/admin.js'])
 
 </head>
 <body>
@@ -22,7 +22,13 @@
 
         <div class="container-fluid">
 
-            @include("partiales.notification")
+            <livewire:flash-messages/>
+
+            {{--<div class="content">
+
+                @include("partiales.notification")
+
+            </div>--}}
 
             <!-- Dashboard content -->
             <div class="content mt-2">
@@ -35,6 +41,7 @@
 
 </div>
 
+@livewireScripts
 
 </body>
 

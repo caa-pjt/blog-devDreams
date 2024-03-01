@@ -6,7 +6,7 @@
 @section('content')
 
     <!-- Posts content -->
-    <div class="content mt-4">
+    <div class="mt-4">
         <div class="row">
             <div class="col mb-4">
                 <h1 class="fs-2">Gestion des Catégories</h1>

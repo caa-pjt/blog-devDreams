@@ -12,6 +12,8 @@ class Post extends Model
 {
 	use HasFactory;
 	
+	public $timestamps = true;
+	
 	protected $fillable = ["title", "slug", "content", "category_id", "published", "image", "user_id"];
 	
 	/**
