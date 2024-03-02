@@ -15,7 +15,10 @@
             <!--Articles -->
             <div class="col-md-12">
 
-                <livewire:category-table/>
+                <livewire:category-table :field="$field"
+                                         :orderDirection="$orderDirection"
+                                         :page="$page"
+                                         :method="$method"/>
 
             </div>
             <!-- END Articles -->

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,21 +24,49 @@ class PostsTable extends Component
 	public string $orderDirection = 'asc';
 	
 	public $post = '';
-	public string $deleteUrl = '';
-	public $page = null;
+	public $page;
+	public $method;
+	public int $perpPage = 10;
 	protected $paginationTheme = 'bootstrap';
-	private int $perpPage = 10;
 	
-	public function mount(Request $request): void
+	/**
+	 * @param $field
+	 * @param $orderDirection
+	 * @param $page
+	 * @param $method
+	 * @return void
+	 */
+	public function mount($field, $orderDirection, $page, $method): void
 	{
-		$this->field = $request->input('order', 'created_at');
-		$this->orderDirection = $request->input('direction', 'desc');
+		$this->field = $field;
+		$this->orderDirection = $orderDirection;
+		$this->page = $page;
+		$this->method = $method;
+		
+		if ($this->method !== false) {
+			// dump('method : ' . $this->method);
+			$this->updatedPage($this->page);
+			
+			// Session::forget('method');
+		}
 	}
 	
-	public function postData(Post $post, $deleteUrl): void
+	public function updatedPage($p = null): void
+	{
+		if ($p !== null) {
+			// Enregistrer la page actuelle dans la session
+			// dump('updatedPage $p xxx : ' . $p);
+			Session::put('p', $p);
+		} else {
+			// Enregistrer la page actuelle dans la session
+			// dump('updatedPage $this->page : ' . $this->page);
+			Session::put('p', $this->getPage());
+		}
+	}
+	
+	public function postData(Post $post): void
 	{
 		$this->post = $post;
-		$this->deleteUrl = $deleteUrl;
 		
 		$this->openModal();
 		
@@ -44,9 +74,44 @@ class PostsTable extends Component
 	
 	public function openModal(): void
 	{
-		$this->dispatch('open-modal', deleteUrl: $this->deleteUrl);
+		//$this->dispatch('showModal', model: 'post');
+		
+		//$this->dispatch('showModal', ['model' => 'post']);
+		
+		$this->dispatch('open-modal', deleteUrl: 'hello');
 	}
 	
+	
+	#[On('post-delete')]
+	public function deletePost(): void
+	{
+		
+		if ($this->post) {
+			
+			// Supprimer le post
+			$this->post->delete();
+			
+			// Mettre à jour la pagination après la suppression
+			$this->updatePagination();
+			
+			// Emission des messages flash
+			$this->setFlashMessages('success', 'Catégorie supprimée avec succès.');
+			
+			// return redirect()->route('admin.post.index', ['post' => $this->post, 'page' => 2]);
+			
+			
+			// Réinitialiser la propriété après la suppression
+			$this->reset(['post']);
+			
+		} else {
+			
+			// Emission des messages flash
+			$this->setFlashMessages('error', 'La Catégorie que vous essayez de supprimer n\'existe pas.');
+		}
+		$this->dispatch('close-modal');
+	}
+	
+	/*
 	public function deletePost(): void
 	{
 		if ($this->post) {
@@ -74,8 +139,8 @@ class PostsTable extends Component
 		}
 		
 		// Fermer le modal après la suppression
-		$this->dispatch('close-modal');
-	}
+		// $this->dispatch('close-modal');
+	}*/
 	
 	public function updatePagination(): void
 	{
@@ -161,12 +226,6 @@ class PostsTable extends Component
 	{
 		// Réinitialiser la pagination à la première page lorsque la recherche est mise à jour
 		$this->resetPage();
-	}
-	
-	public function updatedPage()
-	{
-		// Enregistrer la page actuelle dans la session
-		Session::put('p', $this->getPage());
 	}
 	
 }

@@ -23,7 +23,8 @@
             <thead>
             <tr class="align-middle">
                 <th>#</th>
-                <th>Nom de la catégorie</th>
+                @include('admin.partials.table-header', ['field' => 'name', 'label' => 'Nom de la catégorie', 'orderField'  => $field, 'orderDirection' => $orderDirection])
+                @include('admin.partials.table-header', ['field' => 'created_at', 'label' => 'Création', 'orderField' => $field, 'orderDirection' => $orderDirection])
                 <th class="text-end">Actions</th>
             </tr>
             </thead>
@@ -32,31 +33,36 @@
             @forelse($categories as $category)
                 <tr class="align-middle">
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $category->getName() }}</td>
+                    <td>{{ $category->created_at->format('d/m/Y') }}</td>
                     <td>
                         <div class="d-flex justify-content-end gap-2 align-items-baseline">
                             <a class="btn btn-outline-secondary btn-sm"
-                               href="{{ route('admin.category.edit', ['category' => $category]) }}"><i
-                                        class="bi bi-pencil"></i> Editer</a>
-                            <form action="{{ route('admin.category.destroy', ['category' => $category, "page" => request()->query('page')]) }}"
-                                  method="post">
-                                @csrf
-                                @method("DELETE")
-                                <button onclick="return confirm('Voulez-vous vraiment supprimer la catégorie ?') "
-                                        type="submit" class="btn btn-outline-danger btn-sm"><i
-                                            class="bi bi-trash"></i> Supprimer
-                                </button>
-                            </form>
+                               href="{{ route('admin.category.edit',  ['category' => $category, 'page' =>
+                               request()->get('page'), 'field' => $field, 'orderDirection' => $orderDirection]) }}">
+                                <i class="bi bi-pencil"></i> Editer
+                            </a>
+
+                            <button wire:click.prevent="postData({{ $category }})"
+                                    type="button"
+                                    class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> Supprimer
+                            </button>
                         </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">Aucune catégorie trouvé :(</td>
+                    <td colspan="7">Aucune catégorie trouvée :(</td>
                 </tr>
+
             @endforelse
             </tbody>
         </table>
         {{ $categories->links() }}
     </div>
+    @if(count($categories)  > 0)
+        <livewire:delete-confirmation-modal/>
+
+    @endif
 </div>

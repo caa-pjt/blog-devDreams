@@ -65,8 +65,8 @@
                                href="{{ route('admin.post.edit', ['post' => $post, 'page' => $this->page ]) }}">
                                 <i class="bi bi-pencil"></i> Editer
                             </a>
-                            <button wire:click.prevent="postData({{ $post }}, '{{ route('admin.post.destroy',['post' =>
-                            $post ]) }}')"
+                            <button wire:click.prevent="postData({{ $post }},
+                                        '{{ route('admin.post.destroy', ['post' => $post ]) }}')"
                                     type="button"
                                     class="btn btn-outline-danger btn-sm">
                                 <i class="bi bi-trash"></i> Supprimer

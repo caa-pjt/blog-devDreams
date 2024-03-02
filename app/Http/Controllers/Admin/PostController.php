@@ -9,7 +9,9 @@ use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+
+// use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -21,10 +23,12 @@ class PostController extends Controller
 	 */
 	public function index(Request $request): view
 	{
-		$page = $request->query->get("page");
+		// Récupérer les paramètres de tri
+		$page = $request->session()->get('page', 'page') ?? $request->query->get("page", 1);
+		$field = $request->session()->get('field', 'name') ?? $request->input('orderDirection', 'created_at');
+		$orderDirection = $request->session()->get('orderDirection', 'asc') ?? $request->input('direction', 'desc');
+		$method = $request->session()->get('method', false);
 		$search = $request->input('search');
-		$field = $request->session()->get('orderBy', 'created_at') ?? $request->input('order', 'created_at');
-		$orderDirection = $request->session()->get('direction', 'asc') ?? $request->input('direction', 'desc');
 		
 		
 		$query = Post::with(['category', 'user']);
@@ -42,7 +46,8 @@ class PostController extends Controller
 			'search' => $search,
 			'field' => $field,
 			'orderDirection' => $orderDirection,
-			'page' => $page
+			'page' => $page,
+			'method' => $method,
 		]);
 	}
 	
@@ -54,11 +59,16 @@ class PostController extends Controller
 		
 		$post->create($this->setPostData($post, $request));
 		
-		// Stockez le champ de tri choisi dans la session
-		session(['orderBy' => 'created_at']);
-		session(['direction' => 'desc']);
+		$request->session()->put('page', 1);
+		$request->session()->put('field', 'created_at');
+		$request->session()->put('orderDirection', 'desc');
+		$request->session()->put('method', 'store');
 		
-		return redirect()->route("admin.post.index")->with(["success", "Le post à bien été créé !", "orderBy" => "created_at", "direction" => "asc"]);
+		return redirect()->route("admin.post.index", [
+			'page' => 1,
+			'field' => 'created_at',
+			'orderDirection' => 'desc',
+		])->with(["success", "Le post à bien été créé !", "orderBy" => "created_at", "direction" => "asc"]);
 	}
 	
 	/**
@@ -114,7 +124,11 @@ class PostController extends Controller
 	 */
 	public function update(PostFilterRequest $request, Post $post): RedirectResponse
 	{
-		session(['page', $request->query->get("page")]);
+		$request->session()->put('page', session()->has('p') ? session()->get('p') : null);
+		$request->session()->put('field', $request->query("field"));
+		$request->session()->put('orderDirection', $request->query('orderDirection'));
+		$request->session()->put('method', 'update');
+		
 		
 		$post->update($this->setPostData($post, $request));
 		return redirect()->route("admin.post.index")->with("success", "Article mis à jour !");
@@ -126,7 +140,7 @@ class PostController extends Controller
 	public function destroy(Post $post): RedirectResponse
 	{
 		
-		if ($post->id) {
+		if ($post->id > 0) {
 			
 			// Supprimer l'article
 			if ($post->image) {

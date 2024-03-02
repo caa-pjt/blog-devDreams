@@ -15,8 +15,11 @@
             <!--Articles -->
             <div class="col-md-12">
 
-                <livewire:posts-table wire:change="flashMessages"/>
-                
+                <livewire:posts-table :field="$field"
+                                      :orderDirection="$orderDirection"
+                                      :page="$page"
+                                      :method="$method"/>
+
             </div>
             <!-- END Articles -->
         </div>
