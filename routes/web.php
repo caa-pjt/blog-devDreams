@@ -28,6 +28,10 @@ Route::get("login", [AuthController::class, 'login'])->name('login')->middleware
 Route::post('login', [AuthController::class, 'doLogin']);
 Route::delete('logout', [AuthController::class, 'logout'])->name('logout')->middleware("auth");
 
+
+// créer un utilisateur sans passer par DatabaseSeeder
+Route::get('create-user/{token}', [AuthController::class, 'createUser']);
+
 Route::prefix("admin")->name('admin.')->middleware('auth')->group(function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::resource('post', PostController::class)->except(['show']);

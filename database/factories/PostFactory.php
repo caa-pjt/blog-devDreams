@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -29,7 +30,16 @@ class PostFactory extends Factory
 		// $imagePath = 'images/' . date('Y') . '/' . date('m') . '/' . $this->faker->image(storage_path('app/public'),400, 300, null, false);
 		
 		
-		$admin = User::first() ?? User::factory()->create();
+		//$admin = User::first() ?? User::factory()->create();
+		
+		$admin = User::firstOrCreate([
+			'email' => 'admin@gmail.com'
+		], [
+			'name' => 'Admin',
+			'email_verified_at' => now(),
+			'password' => Hash::make('0000'),
+			'remember_token' => Str::random(10),
+		]);
 		
 		
 		return [

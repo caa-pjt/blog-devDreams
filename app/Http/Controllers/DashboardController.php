@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -16,7 +17,9 @@ class DashboardController extends Controller
 		$publishedPostCount = Post::where('published', true)->count();
 		$unpublishedPostCount = Post::where('published', false)->count();
 		$category = Category::count();
-		$user = User::first(['name', 'email'])->toArray();
+		
+		
+		$user = Auth::user()->only(['name', 'email', 'id']);
 		
 		return view('admin.dashboard', [
 			'publishedPostCount' => $publishedPostCount,

@@ -19,8 +19,6 @@
 
 <div @class(['container-height', 'container' => strpos($className, 'admin') !== false])>
 
-    @include("partiales.notification")
-
     @yield('content')
 </div>
 
