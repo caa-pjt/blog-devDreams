@@ -2,7 +2,7 @@
 
 ## Objectif
 
-- Ce projet a pour objectif de developer une interface permettant de créer des
+- Ce projet a pour objectif de développer une interface permettant de créer des
   articles et de les associer à une catégorie.
 - Seuls les utilisateurs enregistrés peuvent administrer le site.
 
@@ -28,7 +28,7 @@ docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id 
 docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id -g)   composer install --ignore-platform-req=ext-bcmath
 ```
 
-3. Mettre à la racine le fichier .env du projet (le renommer en .env au lieu de .env.txt) :
+3. Mettre à la racine le fichier .env du projet **(le renommer en .env au lieu de .env.txt)** :
 
 4. Démarrer docker et créer les conteneurs :
 
@@ -63,7 +63,7 @@ docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id 
 ]
 ```
 
-> À ce stade, vous pouvez vous connecter avec ces identifiants mais, aucunes données ne sont présentes dans la DB.
+> À ce stade, vous pouvez vous connecter avec ces identifiants, mais aucune données n'est présentes dans la DB.
 
 ### Ajouter des données manuellement en passant par le dashboard
 
@@ -71,9 +71,9 @@ docker run --rm --interactive --tty   --volume $PWD:/app   --user $(id -u):$(id 
 2. Cliquer sur "Catégories" pour ajouter une catégorie : http://localhost/admin/category
 3. Cliquer sur "Articles" pour ajouter un article : http://localhost/admin/post
 
-### Ajouter des fausses données à la DB grace aux seeds
+### Ajouter des fausses données à la DB grâce aux seeds
 
-- Completer la DB `./vendor/bin/sail artisan db:seed`
+- Compléter la DB `./vendor/bin/sail artisan db:seed`
 - Remise à 0 et seeds `./vendor/bin/sail artisan migrate:fresh --seed`
 
 Ces commandes vont ajouter des données dans la DB pour les catégories et les articles ainsi qu'un nouvel utilisateur.
@@ -92,4 +92,24 @@ Ces commandes vont ajouter des données dans la DB pour les catégories et les a
 
 ```bash
 ./vendor/bin/sail artisan test
+```
+
+## Passer en production
+
+1. Modifier le fichier .env pour la production
+
+```bash
+DEBUGBAR_ENABLED=false
+```
+
+2. Générer une clé pour l'application
+
+```bash
+./vendor/bin/sail artisan key:generate
+```
+
+3. Appliquer les assets en production
+
+```bash
+./vendor/bin/sail npm run build
 ```
