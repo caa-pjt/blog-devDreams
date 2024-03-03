@@ -24,7 +24,9 @@
 </div>
 
 <script>
-    document.addEventListener('livewire:load', function () {
+    /*document.addEventListener('livewire:load', function () {
+
+        console.log('Livewire loaded');
         Livewire.on('openModal', function (item) {
             window.livewire.emit('show', item);
         });
@@ -32,5 +34,5 @@
         Livewire.on('closeModal', function () {
             $('#deleteModal').modal('hide');
         });
-    });
+    });*/
 </script>

@@ -9,8 +9,6 @@ use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
-// use Illuminate\View\View;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,11 +23,13 @@ class PostController extends Controller
 	{
 		// Récupérer les paramètres de tri
 		$page = $request->session()->get('page', 'page') ?? $request->query->get("page", 1);
-		$field = $request->session()->get('field', 'name') ?? $request->input('orderDirection', 'created_at');
-		$orderDirection = $request->session()->get('orderDirection', 'asc') ?? $request->input('direction', 'desc');
+		$field = $request->session()->get('postField', 'title') ?? $request->input('postField', 'created_at');
+		$orderDirection = $request->session()->get('orderDirection', 'asc') ?? $request->input('direction', 'asc');
 		$method = $request->session()->get('method', false);
 		$search = $request->input('search');
 		
+		
+		// dump($page, $field, $orderDirection, $method, $search);
 		
 		$query = Post::with(['category', 'user']);
 		
@@ -60,13 +60,13 @@ class PostController extends Controller
 		$post->create($this->setPostData($post, $request));
 		
 		$request->session()->put('page', 1);
-		$request->session()->put('field', 'created_at');
+		$request->session()->put('postField', 'created_at');
 		$request->session()->put('orderDirection', 'desc');
 		$request->session()->put('method', 'store');
 		
 		return redirect()->route("admin.post.index", [
 			'page' => 1,
-			'field' => 'created_at',
+			'postField' => 'created_at',
 			'orderDirection' => 'desc',
 		])->with(["success", "Le post à bien été créé !", "orderBy" => "created_at", "direction" => "asc"]);
 	}
@@ -119,13 +119,14 @@ class PostController extends Controller
 		return view('admin.post.edit', ['post' => $post, 'categories' => $categories]);
 	}
 	
+	
 	/**
 	 * Update the specified resource in storage.
 	 */
 	public function update(PostFilterRequest $request, Post $post): RedirectResponse
 	{
-		$request->session()->put('page', session()->has('p') ? session()->get('p') : null);
-		$request->session()->put('field', $request->query("field"));
+		$request->session()->put('page', session()->has('page') ? session()->get('page') : null);
+		$request->session()->put('postField', $request->query("field"));
 		$request->session()->put('orderDirection', $request->query('orderDirection'));
 		$request->session()->put('method', 'update');
 		

@@ -15,7 +15,7 @@
             <!--Articles -->
             <div class="col-md-12">
 
-                <livewire:posts-table :field="$field"
+                <livewire:posts-table :postField="$field"
                                       :orderDirection="$orderDirection"
                                       :page="$page"
                                       :method="$method"/>

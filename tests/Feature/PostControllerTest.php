@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use JsonException;
 use Tests\TestCase;
 
 class PostControllerTest extends TestCase
@@ -65,6 +66,36 @@ class PostControllerTest extends TestCase
 	 * Teste si la méthode store crée un nouvel article.
 	 *
 	 * @return void
+	 * @throws JsonException
+	 */
+	public function test_store_method_creates_new_post_bad_request()
+	{
+		$this->signInUser();
+		
+		$image = UploadedFile::fake()->image('post.jpg');
+		
+		$postData = Post::factory()->raw([
+			'image' => $image,
+		]);
+		
+		$response = $this->post(route('admin.post.store'), $postData);
+		
+		// $response->assertRedirect(route('admin.post.index'));
+		$response->assertSessionHasNoErrors();
+		
+		$this->assertDatabaseHas('posts', [
+			'title' => $postData['title']
+		]);
+		
+		// Ici il faut supprimer les images uploadées pour ne pas encombrer le disque
+		Storage::disk('public')->deleteDirectory('images');
+	}
+	
+	
+	/**
+	 * Teste si la méthode store crée un nouvel article.
+	 *
+	 * @return void
 	 */
 	public function test_store_method_creates_new_post()
 	{
@@ -78,7 +109,9 @@ class PostControllerTest extends TestCase
 		
 		$response = $this->post(route('admin.post.store'), $postData);
 		
-		$response->assertRedirect(route('admin.post.index'));
+		// Assurez-vous qu'aucune erreur de validation n'est présente dans la session
+		$response->assertSessionHasNoErrors();
+		
 		$this->assertDatabaseHas('posts', [
 			'title' => $postData['title']
 		]);
@@ -176,8 +209,9 @@ class PostControllerTest extends TestCase
 	 * Teste si la méthode store crée un nouvel article assigné à l'utilisateur connecté.
 	 *
 	 * @return void
+	 * @throws JsonException
 	 */
-	public function test_store_method_creates_new_post_assigned_to_authenticated_user()
+	public function test_store_method_creates_new_post_assigned_to_authenticated_user_bad_request()
 	{
 		
 		$this->signInUser();
@@ -190,7 +224,7 @@ class PostControllerTest extends TestCase
 		
 		$response = $this->post(route('admin.post.store'), $postData);
 		
-		$response->assertRedirect(route('admin.post.index'));
+		$response->assertSessionHasNoErrors();
 		
 		$userId = auth()->id();
 		
@@ -202,6 +236,44 @@ class PostControllerTest extends TestCase
 		// Ici il faut supprimer les images uploadées pour ne pas encombrer le disque
 		Storage::disk('public')->deleteDirectory('images');
 		
+	}
+	
+	/**
+	 * Teste si la méthode edit affiche le formulaire d'édition du post avec les informations correctes.
+	 *
+	 * @return void
+	 */
+	public function test_store_method_creates_new_post_assigned_to_authenticated_user()
+	{
+		$this->signInUser();
+		
+		$image = UploadedFile::fake()->image('post.jpg');
+		
+		$postData = Post::factory()->raw([
+			'image' => $image,
+		]);
+		
+		$response = $this->post(route('admin.post.store'), $postData);
+		
+		// Ajoutez les paramètres de requête attendus à l'URL de redirection
+		$expectedUrl = route('admin.post.index', [
+			'page' => 1,
+			'postField' => 'created_at',
+			'orderDirection' => 'desc'
+		]);
+		
+		// Vérifiez que l'URL de redirection correspond à l'URL attendue
+		$response->assertRedirect($expectedUrl);
+		
+		$userId = auth()->id();
+		
+		$this->assertDatabaseHas('posts', [
+			'title' => $postData['title'],
+			'user_id' => $userId,
+		]);
+		
+		// Ici il faut supprimer les images uploadées pour ne pas encombrer le disque
+		Storage::disk('public')->deleteDirectory('images');
 	}
 	
 	

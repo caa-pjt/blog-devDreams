@@ -21,12 +21,16 @@
         <table class="table table-hover">
             <thead>
             <th>#</th>
-            @include('admin.partials.table-header', ['field' => 'title', 'label' => 'Titre', 'orderField' => $field, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'title', 'label' => 'Titre', 'orderField' =>
+            $postField, 'orderDirection' => $orderDirection])
 
             <th>Image à la une</th>
-            @include('admin.partials.table-header', ['field' => 'created_at', 'label' => 'Création', 'orderField' => $field, 'orderDirection' => $orderDirection])
-            @include('admin.partials.table-header', ['field' => 'category_id', 'label' => 'Catégorie', 'orderField' => $field, 'orderDirection' => $orderDirection])
-            @include('admin.partials.table-header', ['field' => 'published', 'label' => 'Status', 'orderField' => $field, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'created_at', 'label' => 'Création', 'orderField' =>
+            $postField, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'category_id', 'label' => 'Catégorie', 'orderField'
+            => $postField, 'orderDirection' => $orderDirection])
+            @include('admin.partials.table-header', ['field' => 'published', 'label' => 'Status', 'orderField' =>
+            $postField, 'orderDirection' => $orderDirection])
             <th class="text-end">Actions</th>
 
             </thead>
@@ -65,12 +69,12 @@
                                href="{{ route('admin.post.edit', ['post' => $post, 'page' => $this->page ]) }}">
                                 <i class="bi bi-pencil"></i> Editer
                             </a>
-                            <button wire:click.prevent="postData({{ $post }},
-                                        '{{ route('admin.post.destroy', ['post' => $post ]) }}')"
+                            <button wire:click.prevent="postData({{ $post }})"
                                     type="button"
                                     class="btn btn-outline-danger btn-sm">
                                 <i class="bi bi-trash"></i> Supprimer
                             </button>
+
                         </div>
                     </td>
                 </tr>
@@ -85,7 +89,8 @@
         {{ $posts->links() }}
     </div>
     @if(count($posts)  > 0)
-        @include('admin.partials.delete-modal')
+        {{--@include('admin.partials.delete-modal')--}}
+        <livewire:delete-confirmation-modal/>
     @endif
 </div>
 

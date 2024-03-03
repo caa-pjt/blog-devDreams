@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use JsonException;
 use Tests\TestCase;
 
 class CategoryControllerTest extends TestCase
@@ -60,6 +61,26 @@ class CategoryControllerTest extends TestCase
 		$response->assertViewHas('category');
 	}
 	
+	
+	/**
+	 * @throws JsonException
+	 */
+	public function test_store_method_creates_new_category_bad_request()
+	{
+		$this->signInUser();
+		
+		$categoryData = [
+			'name' => "Ma catégorie",
+		];
+		
+		$response = $this->post(route('admin.category.store'), $categoryData);
+		
+		// $response->assertRedirect(route('admin.category.index'));
+		$response->assertSessionHasNoErrors();
+		
+		$this->assertDatabaseHas('categories', $categoryData);
+	}
+	
 	/**
 	 * Test de la méthode store pour créer une nouvelle catégorie.
 	 *
@@ -75,7 +96,16 @@ class CategoryControllerTest extends TestCase
 		
 		$response = $this->post(route('admin.category.store'), $categoryData);
 		
-		$response->assertRedirect(route('admin.category.index'));
+		// Ajoutez les paramètres de requête attendus à l'URL de redirection
+		$expectedUrl = route('admin.category.index', [
+			'page' => 1,
+			'field' => 'created_at',
+			'orderDirection' => 'desc'
+		]);
+		
+		// Vérifiez que l'URL de redirection correspond à l'URL attendue
+		$response->assertRedirect($expectedUrl);
+		
 		$this->assertDatabaseHas('categories', $categoryData);
 	}
 	

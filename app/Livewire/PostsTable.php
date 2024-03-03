@@ -12,6 +12,9 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * Composant Livewire pour la gestion du tableau des articles.
+ */
 class PostsTable extends Component
 {
 	use WithPagination;
@@ -19,7 +22,7 @@ class PostsTable extends Component
 	#[Url(except: '')]
 	public string $search = '';
 	#[Url]
-	public string $field = 'title';
+	public string $postField = 'title';
 	#[Url]
 	public string $orderDirection = 'asc';
 	
@@ -30,40 +33,42 @@ class PostsTable extends Component
 	protected $paginationTheme = 'bootstrap';
 	
 	/**
-	 * @param $field
-	 * @param $orderDirection
-	 * @param $page
-	 * @param $method
+	 * Montage du composant avec les paramètres donnés.
+	 *
+	 * @param string $postField Champ pour le tri
+	 * @param string $orderDirection Direction de tri
+	 * @param int $page Numéro de page actuel
+	 * @param string $method Méthode pour la pagination
 	 * @return void
 	 */
-	public function mount($field, $orderDirection, $page, $method): void
+	public function mount($postField, $orderDirection, $page, $method): void
 	{
-		$this->field = $field;
+		$this->postField = $postField;
 		$this->orderDirection = $orderDirection;
 		$this->page = $page;
 		$this->method = $method;
 		
 		if ($this->method !== false) {
-			// dump('method : ' . $this->method);
 			$this->updatedPage($this->page);
-			
-			// Session::forget('method');
 		}
 	}
+	
 	
 	public function updatedPage($p = null): void
 	{
 		if ($p !== null) {
-			// Enregistrer la page actuelle dans la session
-			// dump('updatedPage $p xxx : ' . $p);
-			Session::put('p', $p);
+			Session::put('page', $p);
 		} else {
-			// Enregistrer la page actuelle dans la session
-			// dump('updatedPage $this->page : ' . $this->page);
-			Session::put('p', $this->getPage());
+			Session::put('page', $this->getPage());
 		}
 	}
 	
+	/**
+	 * Définir les données de l'article.
+	 *
+	 * @param Post $post Données de l'article
+	 * @return void
+	 */
 	public function postData(Post $post): void
 	{
 		$this->post = $post;
@@ -74,11 +79,8 @@ class PostsTable extends Component
 	
 	public function openModal(): void
 	{
-		//$this->dispatch('showModal', model: 'post');
+		$this->dispatch('showModal', model: 'post');
 		
-		//$this->dispatch('showModal', ['model' => 'post']);
-		
-		$this->dispatch('open-modal', deleteUrl: 'hello');
 	}
 	
 	
@@ -86,7 +88,7 @@ class PostsTable extends Component
 	public function deletePost(): void
 	{
 		
-		if ($this->post) {
+		if ($this->post->exists()) {
 			
 			// Supprimer le post
 			$this->post->delete();
@@ -97,9 +99,6 @@ class PostsTable extends Component
 			// Emission des messages flash
 			$this->setFlashMessages('success', 'Catégorie supprimée avec succès.');
 			
-			// return redirect()->route('admin.post.index', ['post' => $this->post, 'page' => 2]);
-			
-			
 			// Réinitialiser la propriété après la suppression
 			$this->reset(['post']);
 			
@@ -108,52 +107,36 @@ class PostsTable extends Component
 			// Emission des messages flash
 			$this->setFlashMessages('error', 'La Catégorie que vous essayez de supprimer n\'existe pas.');
 		}
-		$this->dispatch('close-modal');
 	}
 	
-	/*
-	public function deletePost(): void
-	{
-		if ($this->post) {
-			
-			// Supprimer le post
-			$this->post->delete();
-			
-			// Mettre à jour la pagination après la suppression
-			$this->updatePagination();
-			
-			// Emission des messages flash
-			$this->setFlashMessages('success', 'Article supprimé avec succès.');
-			
-			// return redirect()->route('admin.post.index', ['post' => $this->post, 'page' => 2]);
-			
-			
-			// Réinitialiser la propriété deleteId après la suppression
-			$this->post = null;
-			
-			
-		} else {
-			
-			// Emission des messages flash
-			$this->setFlashMessages('error', 'Le post que vous essayez de supprimer n\'existe pas.');
-		}
-		
-		// Fermer le modal après la suppression
-		// $this->dispatch('close-modal');
-	}*/
-	
-	public function updatePagination(): void
+	/**
+	 * Mettre à jour la pagination.
+	 *
+	 * @param bool $return Retourner la valeur de la page
+	 * @return void|int
+	 */
+	public function updatePagination(bool $return = false)
 	{
 		$count = Post::count();
 		$this->page = $this->getPage();
 		$nbrPages = (int)ceil($count / $this->perpPage);
 		
 		if ($this->page > $nbrPages) {
-			$this->setPage($nbrPages);
+			if ($return) {
+				return $nbrPages;
+			} else {
+				$this->setPage($nbrPages);
+			}
 		}
-		
 	}
 	
+	/**
+	 * Émission des messages flash. (composant livewire)
+	 *
+	 * @param string $type Type de message
+	 * @param string $message Contenu du message
+	 * @return void
+	 */
 	public function setFlashMessages(string $type, string $message): void
 	{
 		$this->dispatch('flashMessages', [
@@ -162,44 +145,52 @@ class PostsTable extends Component
 		]);
 	}
 	
-	public function closeModal(): void
-	{
-		$this->dispatch('close-modal');
-	}
-	
+	/**
+	 * Définir le champ de tri et la direction de tri. (admin.partiales.table-header.blade.php)
+	 *
+	 * @param string $name Nom du champ
+	 * @return void
+	 */
 	public function setOrderField(string $name): void
 	{
-		if ($name === $this->field) {
+		if ($name === $this->postField) {
 			// Basculez entre "ASC" et "DESC" uniquement si le champ de tri est le même
 			$this->orderDirection = $this->orderDirection === 'asc' ? 'desc' : 'asc';
 		} else {
 			// Si le champ de tri est différent, réinitialisez la direction de tri à "ASC"
-			$this->field = $name;
+			$this->postField = $name;
 			$this->orderDirection = 'desc';
 		}
 		
 	}
 	
+	/**
+	 * Rendu du composant.
+	 *
+	 * @param Request $request Requête HTTP
+	 * @return view
+	 */
 	public function render(Request $request): view
 	{
 		
-		$currentPage = $request->session()->get('p', 1);
+		$currentPage = $request->session()->get('page', 1);
+		
 		
 		if (session()->has('orderBy') && session()->has('direction')) {
 			
 			$orderBy = session('orderBy');
 			$direction = session('direction');
-			$currentPage = session()->put('p', 1);
+			$currentPage = session()->put('page', 1);
 			
 			// Supprimer les valeurs de la session après utilisation
 			session()->forget(['orderBy', 'direction']);
 		} else {
-			$orderBy = $this->field;
+			$orderBy = $this->postField;
 			$direction = $this->orderDirection;
 		}
 		
+		// dd($orderBy, $direction);
 		
-		// dump('render', $orderBy, session('orderBy'));
 		$posts = Post::with(['category', 'user'])
 			->where('title', 'LIKE', "%$this->search%")
 			->orderBy($orderBy, $direction)
@@ -212,19 +203,60 @@ class PostsTable extends Component
 		return view('livewire.posts-table', ['posts' => $posts, 'page' => $currentPage]);
 	}
 	
-	private function redirectIfPageMismatch($posts, $currentPage)
+	
+	/**
+	 * Rediriger si la page actuelle est différente de la page stockée en session
+	 *
+	 * @param object $categories Données de la catégorie
+	 * @param int|null $currentPage Page actuelle
+	 * @return mixed
+	 */
+	private function redirectIfPageMismatch(object $categories, int|null $currentPage): mixed
 	{
-		if ($currentPage != $posts->currentPage()) {
+		$page = $this->updatePagination(true);
+		
+		if ($currentPage === session('page')) {
 			
-			return Redirect::to('admin/post?page=' . $currentPage);
+			session()->put('page', $currentPage);
+			
+			$page = $currentPage;
+			
+			
+		} elseif ($page === null || $page === 0) {
+			session()->put('page', 1);
+			$page = 1;
+		} else {
+			session()->put('page', $page);
+		}
+		
+		if ($page === null || $page === 0) {
+			
+			return null;
 			
 		}
 		
+		
+		if (($currentPage === $categories->currentPage()) && ($currentPage > $page)) {
+			
+			return Redirect::to('admin/post?page=' . $categories->lastPage() . 'orderBy=' . $this->postField, 'direction=' . $this->orderDirection);
+			
+		}
+		
+		if ($currentPage != $categories->currentPage()) {
+			
+			return Redirect::to('admin/post?page=' . $currentPage . '&orderBy=' . $this->postField . '&direction=' . $this->orderDirection);
+			
+		}
+		return null;
 	}
 	
+	/**
+	 * Mettre à jour la recherche. (Réinitialiser la pagination à la première page lorsque la recherche est mise à jour)
+	 *
+	 * @return void
+	 */
 	public function updatedSearch(): void
 	{
-		// Réinitialiser la pagination à la première page lorsque la recherche est mise à jour
 		$this->resetPage();
 	}
 	

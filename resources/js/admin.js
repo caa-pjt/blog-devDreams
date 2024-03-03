@@ -6,6 +6,10 @@ window.bootstrap = bootstrap;
 // import './bootstrap.bunddle.js';
 
 
+/**
+ * Toutes ce JS n'est plus utilisé - Seulement utilisé en static sans Livewire
+ * @type {HTMLElement}
+ */
 const deleteModal = document.getElementById("deleteModal");
 let myModal = null;
 
@@ -25,7 +29,7 @@ window.addEventListener("open-modal", (event) => {
     console.log("open-modal event received", event);
 
     // Récupérer les informations depuis event.detail
-    const {deleteUrl} = event.detail;
+    // const {deleteUrl} = event.detail;
     // Mettre à jour l'action du formulaire de suppression avec les données nécessaires
     //formAction(deleteUrl)
 
